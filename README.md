@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# revspace-frontend
-The repository for housing files related to the frontend for the RevSpace application.
-=======
 # RevSpaceWebApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.11.
@@ -29,4 +25,3 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
->>>>>>> 0d87c28 (GroupService and Group models created)
