@@ -1,16 +1,14 @@
-
-
 .nav-link:hover {
-    background-color: #F26925;
+    background-color: blue;
     border-radius: 5px;
-    color: white !important;
+    color: rgb(182, 36, 36) !important;
 }
 .dropdown-toggle:hover {
     background-color: #F26925;
     border-radius: 5px;
 }
 .fullContents {
-    background-color: #FFFFFF;
+    background-color: blue;
 }
 .center{
     display: flex;
@@ -28,8 +26,8 @@ body.dark-theme {
     --bkg-color: #252222;
     --btn-txt-color: rgb(46, 43, 43);
     --btn-bg-color: rgb(20, 211, 195);
-  }
-  
+}
+
 .body{
     background-color: black;
 }

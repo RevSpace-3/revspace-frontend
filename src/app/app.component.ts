@@ -18,9 +18,11 @@ import { map } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   title = 'RevSpaceWebApp';
+  darkMode:number;
   notificationsList: NotificationsModel[] = [];
   constructor(private loginService: LoginService, private notiService: NotificationsService, private router: Router) { }
   ngOnInit(): void {
+    this.darkMode =0;
     timer(0, 5000).pipe(map(() => {
       // console.log("timer triggered");
       this.getNotification();
@@ -37,6 +39,19 @@ export class AppComponent implements OnInit {
   getUserId() {
     let user = this.loginService.getLoginInfo().user;
     return user.userId;
+  }
+
+  toggleDarkMode(){
+    if(this.darkMode ==0){
+      this.darkMode ++;
+    }else{
+      this.darkMode = 0;
+    }
+    console.log("this button is getting pressed")
+  }
+
+  darkModeValue(){
+    return this.darkMode;
   }
 
   getNotification() {

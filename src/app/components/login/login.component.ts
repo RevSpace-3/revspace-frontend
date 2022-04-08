@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { from } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from '../../services/user.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +17,9 @@ export class LoginComponent implements OnInit {
   constructor(private loginService:LoginService) { }
 
   ngOnInit(): void {
+    
   }
-
+  
   username:string;
   password:string;
 
