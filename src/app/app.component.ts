@@ -8,7 +8,8 @@ import { NotificationsModel } from './models/Notifications';
 import { Router } from '@angular/router';
 import { interval, Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import {SService} from './shared/s.service'
+import {LoginComponent} from 'src/app/components/login/login.component'
 
 
 @Component({
@@ -18,11 +19,11 @@ import { map } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   title = 'RevSpaceWebApp';
-  darkMode:number;
+  darkMode:number=1;
   notificationsList: NotificationsModel[] = [];
-  constructor(private loginService: LoginService, private notiService: NotificationsService, private router: Router) { }
+  constructor(private loginService: LoginService, private notiService: NotificationsService, private router: Router, private shared:SService, private login:LoginComponent) { }
   ngOnInit(): void {
-    this.darkMode =0;
+    
     timer(0, 5000).pipe(map(() => {
       // console.log("timer triggered");
       this.getNotification();
@@ -41,13 +42,22 @@ export class AppComponent implements OnInit {
     return user.userId;
   }
 
-  toggleDarkMode(){
-    if(this.darkMode ==0){
-      this.darkMode ++;
-    }else{
-      this.darkMode = 0;
-    }
-    console.log("this button is getting pressed")
+  // toggleDarkMode(){
+  //   if(this.darkMode ==0){
+  //     this.darkMode ++;
+  //     this.login.darkMode ++;
+  //   }else{
+  //     this.darkMode = 0;
+  //     this.login.darkMode=0;
+      
+  //   }
+  //   this.shared.setDarkMode(this.darkMode)
+  //   console.log("this button is getting pressed")
+  // }
+
+  toggleDark(){
+    this.darkMode = this.shared.toggleDarkMode();
+    this.login.darkMode = this.shared.toggleDarkMode();
   }
 
   darkModeValue(){

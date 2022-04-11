@@ -3,6 +3,8 @@ import { from } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from '../../services/user.service';
 import { AppComponent } from 'src/app/app.component';
+import { SService } from 'src/app/shared/s.service';
+
 
 @Component({
   selector: 'app-login',
@@ -14,9 +16,15 @@ import { AppComponent } from 'src/app/app.component';
 
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService:LoginService) { }
+  darkMode:number=1;
+  
+  constructor(private loginService:LoginService, private shared:SService) { }
 
   ngOnInit(): void {
+    this.darkMode= this.shared.getDarkMode();
+  }
+
+  ngOnChanges(): void {
     
   }
   
@@ -26,6 +34,11 @@ export class LoginComponent implements OnInit {
   login()
   {
     this.loginService.login(this.username, this.password);
+  }
+
+  toggleDark(){
+    this.darkMode = this.shared.toggleDarkMode();
+    
   }
 
   /**

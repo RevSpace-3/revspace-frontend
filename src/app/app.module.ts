@@ -21,6 +21,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchDetailsComponent } from './components/search-details/search-details.component';
 import { ViewProfileComponent } from './components/view-profile/view-profile.component';
+import { SService } from './shared/s.service';
 
 
 
@@ -50,7 +51,7 @@ import { ViewProfileComponent } from './components/view-profile/view-profile.com
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [ImageService],
+  providers: [ImageService, SService, LoginComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
