@@ -216,11 +216,6 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
       }
       
     }
-    else if (this.alreadyLiked(curPost)){
-     do {
-       this.getPostUtilObj(curPost).numLikes --;
-     } while (this.getPostUtilObj(curPost).numLikes > 0);
-    }
   }
 
   determineStarStyle(curPost: Post): string {
