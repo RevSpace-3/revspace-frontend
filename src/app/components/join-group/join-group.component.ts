@@ -47,7 +47,8 @@ export class JoinGroupComponent implements OnInit {
     this.showGroup = !this.showGroup;
     this.toggleGroup.emit(this.showGroup);
 
-    this.getJoinableGroups();
+    this.ngOnInit();
+    //this.getJoinableGroups();
   }
   getJoinableGroups()
   {
