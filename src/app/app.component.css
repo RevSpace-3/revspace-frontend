@@ -1,33 +1,14 @@
 .nav-link:hover {
-    background-color: blue;
+    background-color: #F26925;
     border-radius: 5px;
-    color: rgb(182, 36, 36) !important;
+    color: white !important;
 }
+
 .dropdown-toggle:hover {
     background-color: #F26925;
     border-radius: 5px;
 }
+
 .fullContents {
-    background-color: blue;
-}
-.center{
-    display: flex;
-    justify-content: center;
-    color: #ddd;
-    position:relative;
-    padding: 20px 40px;
-    border-radius: 20px;
-    width:fit-content;
-    
-
-}
-body.dark-theme {
-    --text-color: #eee;
-    --bkg-color: #252222;
-    --btn-txt-color: rgb(46, 43, 43);
-    --btn-bg-color: rgb(20, 211, 195);
-}
-
-.body{
-    background-color: black;
+    background-color: #FFFFFF;
 }
