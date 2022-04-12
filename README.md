@@ -36,4 +36,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 changed by tay
+<<<<<<< HEAD
+>>>>>>> 696b4b8383b805474b22254d2f5861c87c21ba0d
+=======
 >>>>>>> 696b4b8383b805474b22254d2f5861c87c21ba0d
