@@ -56,6 +56,8 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
   notificationModel:NotificationsModel;
   user: User = this.loginService.getLoginInfo().user;
 
+  preventMultipleLikeFlag:boolean = false;
+
   /*
   postUtil is an array where each element is an object with the following attributes:
     - postId
@@ -135,8 +137,8 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
           this.getPostUtilObj(likePost).starStyle = "fas fa-star";
 
         }
-      // }
-      if (likePost.creatorId.userId == this.user.userId) {
+      if (likePost.creatorId.userId == this.user.userId) 
+      {
         
         // this.getPostUtilObj(likePost).starStyle = "fas fa-star";
         
@@ -150,7 +152,11 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     {
       // this.likeHttpService.likePost();
 
-      this.getPostUtilObj(curPost).numLikes ++;
+
+        this.preventMultipleLikeFlag = false;
+        this.getPostUtilObj(curPost).numLikes ++;
+      
+        console.log("Flag value: " + this.preventMultipleLikeFlag);
       this.getPostUtilObj(curPost).starStyle = "fas fa-star";
 
       this.like = new Like(this.loginService.getLoginInfo().user, curPost);
@@ -168,8 +174,8 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     this.likeHttpService.likePost(this.like).subscribe(
       (response)=>{console.log(response)
         this.like = null; })
-
-        this.ngOnInit();
+        this.router.navigate(['populate-feed']);
+        //this.ngOnInit();
     }
     else
     {
@@ -191,10 +197,19 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
               err => errMsg = err
             );
 
-            this.getPostUtilObj(curPost).numLikes--;
+            if(!this.preventMultipleLikeFlag)
+            {
+              this.preventMultipleLikeFlag = true;
+              this.getPostUtilObj(curPost).numLikes--;
 
+              this.likeHttpService.getAllLikes().subscribe(data => {
+                this.allLikes = data;
+              });
+            }
+            console.log("Flag value: " + this.preventMultipleLikeFlag);
             console.log( "Result" +  result);
-            this.ngOnInit();
+            //this.ngOnInit();
+            this.router.navigate(['populate-feed']);
             break;
           }
 
