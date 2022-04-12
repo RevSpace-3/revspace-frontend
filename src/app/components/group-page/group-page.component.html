@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+        <h1>{{errMsg}}</h1>
+
+        <form class="viewGroupsForm" >
+            <table class="table" >
+                <tr class="d-flex justify-content-center">
+                    <div class="shadow w-75 p-3 mb-5 bg-white rounded">
+                        <div class="row">
+                            <div class="d-flex justify-content-center">
+                                <div class="col-2">
+                                    <div class="form-control">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" readonly value="{{group.groupName}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-5">
+                                    <div class="form-control">
+                                        <label>Description</label>
+                                        <input type="text" class="form-control" readonly value="{{group.description}}">
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="d-flex justify-content-center">
+                                <div class="col-4">
+                                    <div class="form-control">
+                                        <label>Interests</label>
+                                        <input type="text" class="form-control" readonly value="{{group.interests}}">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-control">
+                                        <label>Creator</label>
+                                        <input type="text" class="form-control" readonly value="{{group.owner.email}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

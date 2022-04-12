@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
-import { EditUserProfileComponent } from '../edit-user-profile/edit-user-profile.component';
 import { Credential } from 'src/app/models/Credential';
 import { User } from 'src/app/models/User';
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="container-fluid">
+        <h1>{{errMsg}}</h1>
+        <form class="viewGroupsForm" >
+            <table class="table" *ngFor="let group of groups; let i = index;">
+                <tr class="d-flex justify-content-center">
+                    <div class="shadow w-50 p-3 mb-5 bg-white rounded">
+                    <div class="row">
+                        <div class="d-flex justify-content-center">
+                        <div class="col-2">
+                            <div class="form-control">
+                                <label>Name</label>
+                                <input type="text" class="form-control" readonly value="{{group.groupName}}">
+                            </div>
+                        </div>
+
+                        <div class="col-5">
+                            <div class="form-control">
+                                <label>Description</label>
+                                <input type="text" class="form-control" readonly value="{{group.description}}">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-control">
+                                <label>Interests</label>
+                                <input type="text" class="form-control" readonly value="{{group.interests}}">
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="form-control">
+                        <div class="d-flex justify-content-center pt-1">
+                            <div class="col-2">
+                                <input type="submit" class="btn btn-dark" (click)="openGroup(i)" value="View Group">
+                            </div>
+                            <div class="col-2" *ngIf="group.owner.userId == loginService.getLoginInfo().user.userId" >
+                                <input type="submit" class="btn btn-danger" (click)="openGroup(i)" value="Manage Group">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+            </table>
+        </form>
+    </div>
+    <!-- <app-group-chat></app-group-chat> -->
+</body>
+</html>
+
+
+  

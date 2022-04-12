@@ -68,13 +68,11 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
       this.postHttpService.getTenPosts(oldestId).subscribe(
         (response) => {
   
-  
           if(response.status == 200){ //Okay
             
             this.pclArray = response.body;
             console.log(this.pclArray);
             this.populateArrays(this.pclArray);
-  
   
           }else if (response.status == 204){ //No more posts to display
             
@@ -90,9 +88,6 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
   }
 
   populateArrays(pclArray: Array<Array<Post>>) {
-
-    
-
     for (let newPost of pclArray[0]) {
 
       let newPostUtilObj = new PostUtilObj(newPost.postId, 0, "");
@@ -146,6 +141,7 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
   }
 
   likePost(curPost: Post) {
+    if(this.getPostUtilObj(curPost).numLikes <= 0)
     if (!this.alreadyLiked(curPost)){
       // this.likeHttpService.likePost();
 
@@ -172,6 +168,11 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     )
       
     }
+    else if (this.alreadyLiked(curPost)){
+     do {
+       this.getPostUtilObj(curPost).numLikes --;
+     } while (this.getPostUtilObj(curPost).numLikes > 0);
+    }
   }
 
   determineStarStyle(curPost: Post): string {
@@ -188,9 +189,9 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
         return true;
       }
     }
-    //return false;
+    return false;
 
-    return (this.determineStarStyle(curPost) == "fas fa-star");
+    //return (this.determineStarStyle(curPost) == "fas fa-star");
 
   }
 

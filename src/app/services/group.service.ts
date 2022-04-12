@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { GroupInfo } from '../models/group-info';
 import { GroupThread } from '../models/group-thread';
 import { BackendService } from './backend.service';
 import { LoginService } from './login.service';
@@ -22,10 +23,30 @@ export class GroupService
 
   authToken:string = this.loginService.getLoginInfo().authToken; // Get auth token from user
 
+  private currentGroup:GroupInfo = null;
+
   postHeaders = new HttpHeaders({
     'Context-Type': 'application/json',
     'Authorization': this.authToken
   });
+
+  /**************************************************************************/
+  // Getters
+
+  getCurrentGroup():GroupInfo
+  {
+    return this.currentGroup;
+  }
+
+  /**************************************************************************/
+  // Setters
+  setCurrentGroup( group:GroupInfo )
+  {
+    if(group != null || group != undefined)
+      this.currentGroup = group;
+
+    console.log("CurrentGroup was set to: " + this.currentGroup);
+  }
 
   /**************************************************************************/
   // Posts
@@ -37,9 +58,9 @@ export class GroupService
 
     return this.http.post<GroupThread>(
       this.backendService.getBackendURL() + uriMapping,
-          jsonStr,//JSON.stringify(groupObj),
+          groupObj,
           {headers: this.postHeaders}
-      ).pipe(retry(1), catchError(this.errorHandle));
+      ).pipe(retry(0), catchError(this.errorHandle));
   }
 
   /**************************************************************************/
@@ -52,7 +73,7 @@ export class GroupService
 
     return this.http.put<GroupThread>(
       this.backendService.getBackendURL() + uriMapping,
-          jsonStr,//JSON.stringify(groupObj),
+          groupObj,
           {headers: this.postHeaders}
       ).pipe(retry(1), catchError(this.errorHandle));
   }
@@ -84,10 +105,33 @@ export class GroupService
   getAllGroups(): Observable<GroupThread[]>
   {
     return this.http.get<GroupThread[]>(
-      this.backendService.getBackendURL() + uriMapping + "/GetAllGroups"
+      this.backendService.getBackendURL() + uriMapping + "/GetAll"
     );
   }
-
+  getAllUniqueGroups(): Observable<GroupThread[]>
+  {
+    return this.http.get<GroupThread[]>(
+      this.backendService.getBackendURL() + uriMapping + "/ByUnique"
+    );
+  }
+  getThreadsByGroupInfo(): Observable<GroupThread[]>
+  {
+    return this.http.get<GroupThread[]>(
+      this.backendService.getBackendURL() + uriMapping + "/GetThreads/" + this.currentGroup.infoId
+    );
+  }
+  getGroupsByMembership():Observable<GroupInfo[]>
+  {
+    return this.http.get<GroupInfo[]>(
+      this.backendService.getBackendURL() + uriMapping + "/ByMembership/" + this.loginService.getLoginInfo().user.userId
+    );
+  }
+  getOtherGroups():Observable<GroupInfo[]>
+  {
+    return this.http.get<GroupInfo[]>(
+      this.backendService.getBackendURL() + uriMapping + "/GetOthers/" + this.loginService.getLoginInfo().user.userId
+    );
+  }
   /**************************************************************************/
   // Utility
   errorHandle(error: { error: { message: string; }; status: any; message: any; }) {
@@ -101,5 +145,5 @@ export class GroupService
     }
     console.log(errorMessage);
     return throwError(errorMessage);
-  }
+  } // blarg
 }
