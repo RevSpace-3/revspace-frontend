@@ -13,6 +13,7 @@ import { ViewGroupsComponent } from './components/view-groups/view-groups.compon
 import { CreateGroupComponent } from './components/create-group/create-group.component';
 import { JoinGroupComponent } from './components/join-group/join-group.component';
 import { GroupPageComponent } from './components/group-page/group-page.component';
+import { PopulateFeedComponent } from './components/populate-feed/populate-feed.component';
 
 const routes: Routes = [
   {path: '', component:PostFeedComponent},
@@ -25,6 +26,8 @@ const routes: Routes = [
   {path: 'create-group', component: CreateGroupComponent},
   {path: 'join-groups', component: JoinGroupComponent},
   {path: 'group-page', component: GroupPageComponent}
+  {path: 'group-page', component: GroupPageComponent},
+  {path: 'populate-feed', component: PopulateFeedComponent}
 ];
 
 @NgModule({

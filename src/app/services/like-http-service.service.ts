@@ -30,6 +30,13 @@ export class LikeHttpServiceService {
   getAllLikes(): Observable<Array<Like>>{
     return this.http.get<Array<Like>>(this.backendService.getBackendURL()+ '/likes', {headers: this.postHeaders}).pipe(retry(1), catchError(this.errorHandl));
   }
+  deleteLike(obj:Like): Observable<boolean>
+  {
+    return this.http.delete<boolean>(
+        this.backendService.getBackendURL() + "/likes/" + obj.likeId, 
+        {headers: this.postHeaders})
+            .pipe(retry(1), catchError(this.errorHandl));
+  }
 
   errorHandl(error: { error: { message: string; }; status: any; message: any; }) {
     let errorMessage = '';

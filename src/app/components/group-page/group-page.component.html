@@ -44,6 +44,16 @@
             </div>
             </tr>
         </table>
-    </form>
+        </form>
+        <div class="d-flex justify-content-center">
+            <div class="shadow w-75 p-3 mb-5 bg-white rounded">
+                <div class="form-control">
+                    <ul class="list-group" *ngFor="let thread of threads; let i = index;">
+                        <label>Name </label>
+                        <li class="list-group-item">{{thread.member.firstName + " " + thread.member.lastName}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 </body>
 </html>
