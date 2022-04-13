@@ -24,6 +24,7 @@ import { ViewProfileComponent } from './components/view-profile/view-profile.com
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
