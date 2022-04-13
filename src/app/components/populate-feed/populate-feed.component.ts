@@ -172,7 +172,7 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     // console.log(this.pclArray);
     this.likeHttpService.likePost(this.like).subscribe(
       (response)=>{
-        this.allLikes.push(this.like);
+        this.allLikes.push(response);
         console.log(response);
         this.like = null; })
     }
@@ -193,13 +193,13 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
               (data) => {result = data;},
               err => this.errMsg = err
             );
-
+              
               this.getPostUtilObj(curPost).starStyle = "far fa-star";
               let temp = this.getPostUtilObj(curPost).numLikes;
 
               this.getPostUtilObj(curPost).numLikes = temp - 1 >= 0 ? temp - 1 : 0; // yeah... ik. but until I fix the other problem this is A solution lol.  
           }
-          this.likeHttpService.getAllLikes().subscribe(data => { this.allLikes = data; }, err => this.errMsg = err);
+          this.likeHttpService.getAllLikes().subscribe(data => { this.allLikes = data; }, err => this.errMsg = err); // Its also in onInit because for some reason it wasn't updating sometimes.
           this.router.navigate(['populate-feed']);
           //this.ngOnInit();
       }
