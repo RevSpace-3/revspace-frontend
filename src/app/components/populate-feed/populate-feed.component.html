@@ -30,6 +30,7 @@
                                     <span style="color: rgb(185, 185, 186);">  Like</span>
                                 </span>
 
+
                                 <span class="postButton" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + 'commentsList' + post.postId" >
                                     <i class="fa fa-comments-o"></i>
                                     <span style="color: rgb(185, 185, 186);">  Comments</span>
@@ -74,8 +75,9 @@
             <small class="comment-text">{{comment.body}}</small>
             <div class="d-flex flex-row align-items-center status"></div>
             
+            <!--[attr.disable]="alreadyLiked(comment)"-->
             <div style="color: rgb(185, 185, 186);">
-                <span class="commentButton" (click)="likePost(comment)" [attr.disable]="alreadyLiked(comment)">
+                <span class="commentButton" (click)="likePost(comment)">
                     <span style="text-align: left; vertical-align: text-top; color: rgb(185, 185, 186);">{{getPostUtilObj(comment).numLikes}}</span>
                     <i [class]="determineStarStyle(comment)"></i>
                     <span style="color: rgb(185, 185, 186);">  Like</span>

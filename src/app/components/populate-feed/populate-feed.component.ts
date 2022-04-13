@@ -224,9 +224,9 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
         return true;
       }
     }
-    //return false;
+    return false;
 
-    return (this.determineStarStyle(curPost) == "fas fa-star");
+    //return (this.determineStarStyle(curPost) == "fas fa-star");
 
   }
 

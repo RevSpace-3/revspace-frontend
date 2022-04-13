@@ -26,6 +26,7 @@ const routes: Routes = [
   {path: 'create-group', component: CreateGroupComponent},
   {path: 'join-groups', component: JoinGroupComponent},
   {path: 'group-page', component: GroupPageComponent},
+  {path: 'group-page', component: GroupPageComponent},
   {path: 'populate-feed', component: PopulateFeedComponent}
 ];
 
