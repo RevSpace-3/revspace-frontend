@@ -42,7 +42,9 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     this.postUtil = [];
 
     this.nextTen(0);
-    //this.posts = this.newPostService.posts;
+  
+    this.likeHttpService.getAllLikes().subscribe(data => {
+      this.allLikes = data; });
   }
 
   pclArray: Array<Array<Post>> = [];
@@ -55,8 +57,7 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
   stringmessage:string;
   notificationModel:NotificationsModel;
   user: User = this.loginService.getLoginInfo().user;
-
-  preventMultipleLikeFlag:boolean = false;
+  errMsg:string;
 
   /*
   postUtil is an array where each element is an object with the following attributes:
@@ -148,15 +149,13 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
   }
 
   likePost(curPost: Post) {
-    if (!this.alreadyLiked(curPost))
+    if (!this.alreadyLiked(curPost) )
     {
       // this.likeHttpService.likePost();
 
+      // added for liking logic.
 
-        this.preventMultipleLikeFlag = false;
-        this.getPostUtilObj(curPost).numLikes ++;
-      
-        console.log("Flag value: " + this.preventMultipleLikeFlag);
+      this.getPostUtilObj(curPost).numLikes++;
       this.getPostUtilObj(curPost).starStyle = "fas fa-star";
 
       this.like = new Like(this.loginService.getLoginInfo().user, curPost);
@@ -172,16 +171,14 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     console.log(this.like);
     // console.log(this.pclArray);
     this.likeHttpService.likePost(this.like).subscribe(
-      (response)=>{console.log(response)
+      (response)=>{
+        this.allLikes.push(this.like);
+        console.log(response);
         this.like = null; })
-        this.router.navigate(['populate-feed']);
-        //this.ngOnInit();
     }
     else
     {
-      // I'm sorry... I know this is gross...
-      console.log("Im hitting the else condition in addLike");
-
+        // I'm sorry... I know this is gross...
         // Whats going on here is that I'm iterating through the allLikes array to find the like that has been choosen
         for(let i = 0; i < this.allLikes.length; i++) 
         {
@@ -190,29 +187,21 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
             console.log("I'm inside the inner loop");
             console.log("Post Id: " + this.allLikes[i].postId.postId);
             let result:boolean; // returns undefined, should prob use a string as a response message.
-            let errMsg:string;  // Just so it goes through, legacy code in this file is... not the best.
+
             //Bind our results and remove the like from the db.
             this.likeHttpService.deleteLike(this.allLikes[i]).subscribe( 
               (data) => {result = data;},
-              err => errMsg = err
+              err => this.errMsg = err
             );
 
-            if(!this.preventMultipleLikeFlag)
-            {
-              this.preventMultipleLikeFlag = true;
-              this.getPostUtilObj(curPost).numLikes--;
+              this.getPostUtilObj(curPost).starStyle = "far fa-star";
+              let temp = this.getPostUtilObj(curPost).numLikes;
 
-              this.likeHttpService.getAllLikes().subscribe(data => {
-                this.allLikes = data;
-              });
-            }
-            console.log("Flag value: " + this.preventMultipleLikeFlag);
-            console.log( "Result" +  result);
-            //this.ngOnInit();
-            this.router.navigate(['populate-feed']);
-            break;
+              this.getPostUtilObj(curPost).numLikes = temp - 1 >= 0 ? temp - 1 : 0; // yeah... ik. but until I fix the other problem this is A solution lol.  
           }
-
+          this.likeHttpService.getAllLikes().subscribe(data => { this.allLikes = data; }, err => this.errMsg = err);
+          this.router.navigate(['populate-feed']);
+          //this.ngOnInit();
       }
       
     }
@@ -227,11 +216,11 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
 
   alreadyLiked(curPost: Post): boolean 
   {
-
     for(let like of this.allLikes)
     {
       if(like.postId.postId == curPost.postId && this.user.userId == like.userId.userId)
       {
+        //this.preventLike = true;
         return true;
       }
     }
