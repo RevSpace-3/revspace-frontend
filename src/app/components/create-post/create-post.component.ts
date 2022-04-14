@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/Post';
@@ -10,6 +10,7 @@ import { Form } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
 import { NewPostService } from 'src/app/services/new-post.service';
 import { PostUtilObj } from 'src/app/models/PostUtilObj';
+import { GroupInfo } from 'src/app/models/group-info';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class CreatePostComponent implements OnInit {
   // user: User = new User(1,'email','first','last',10000000,19,'gitur','title','NY','aboutme');
   post = new Post(this.user,'body','image',1637264203, false);
 
-  
+  @Input() groupRef:GroupInfo;
 
   //NGIFs
   expandThis=false;
@@ -74,10 +75,11 @@ export class CreatePostComponent implements OnInit {
     image: this.urlLink, 
     date: new Date().getTime(), 
     comment: false,
-    parentPost: null,
+    parentPost: (this.groupRef != null) ? this.groupRef.postHead : null, ///////////I changed this!!! It was parentPost: null
+    
     postId:0
     }
-    
+    console.log("Current Head" + this.groupRef.postHead.creatorId );
     //CALLING ADD POST SERVICE TO SEND NEW POST
     this.postService.addPost(this.post)
    .subscribe(data =>{

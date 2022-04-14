@@ -34,6 +34,13 @@ export class PostHttpServiceService {
     return this.http.get<any>(this.backendService.getBackendURL() + `/full/posts/` + this.loginService.getLoginInfo().user.userId, {headers: authHeadersTen, observe:'response'});
   }
 
+  getGroupPosts(groupHeadId:number) :Observable<Post[]>
+  {
+    return this.http.get<Post[]>(this.backendService.getBackendURL() + "/posts/GroupPosts/" + groupHeadId, { headers: this.postHeaders }).pipe(
+      retry(0),
+      catchError(this.errorHandl)
+    );
+  }
 
    addPost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.backendService.getBackendURL() + `/posts`, post, { headers: this.postHeaders  }).pipe(

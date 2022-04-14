@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { GroupInfo } from 'src/app/models/group-info';
 import { GroupThread } from 'src/app/models/group-thread';
+import { Post } from 'src/app/models/Post';
 import { User } from 'src/app/models/User';
 import { GroupService } from 'src/app/services/group.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -44,7 +46,13 @@ export class CreateGroupComponent implements OnInit {
     console.log("GroupName: " + this.groupForm.get('groupName').value);
     console.log("description: " + this.groupForm.get('description').value);
     console.log("interests: " + this.groupForm.get('interests').value);
-    let info:GroupInfo = new GroupInfo(this.groupForm.get('groupName').value, this.groupForm.get('description').value, this.groupForm.get('interests').value, curUser);
+    let info:GroupInfo = 
+    new GroupInfo(
+      this.groupForm.get('groupName').value, 
+      this.groupForm.get('description').value, 
+      this.groupForm.get('interests').value, 
+      curUser, 
+      new Post(null, "Group Head " + this.groupForm.get('groupName').value + " Post", "N/A", 12345, false, null)); // Creating a head for our tree
 
     console.log("Info -> " + info);
     let thread:GroupThread = new GroupThread(info, curUser);

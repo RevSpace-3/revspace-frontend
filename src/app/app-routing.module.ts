@@ -14,6 +14,7 @@ import { CreateGroupComponent } from './components/create-group/create-group.com
 import { JoinGroupComponent } from './components/join-group/join-group.component';
 import { GroupPageComponent } from './components/group-page/group-page.component';
 import { PopulateFeedComponent } from './components/populate-feed/populate-feed.component';
+import { GroupFeedComponent } from './components/group-feed/group-feed.component';
 
 const routes: Routes = [
   {path: '', component:PostFeedComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: 'join-groups', component: JoinGroupComponent},
   {path: 'group-page', component: GroupPageComponent},
   {path: 'group-page', component: GroupPageComponent},
-  {path: 'populate-feed', component: PopulateFeedComponent}
+  {path: 'populate-feed', component: PopulateFeedComponent},
+  {path: 'group-feed', component: GroupFeedComponent}
 ];
 
 @NgModule({

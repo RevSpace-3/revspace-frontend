@@ -27,6 +27,7 @@ import { CreateGroupComponent } from './components/create-group/create-group.com
 import { JoinGroupComponent } from './components/join-group/join-group.component';
 import { GroupPageComponent } from './components/group-page/group-page.component';
 import { GroupChatComponent } from './components/group-chat/group-chat.component';
+import { GroupFeedComponent } from './components/group-feed/group-feed.component';
 
 
 
@@ -51,7 +52,8 @@ import { GroupChatComponent } from './components/group-chat/group-chat.component
     CreateGroupComponent,
     JoinGroupComponent,
     GroupPageComponent,
-    GroupChatComponent
+    GroupChatComponent,
+    GroupFeedComponent
   ],
   
   imports: [

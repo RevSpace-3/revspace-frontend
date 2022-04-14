@@ -1,0 +1,17 @@
+<p>group-feed works!</p>
+
+<input type="button" (click)="updatePosts()" value="Update Posts">
+
+<div>
+    <table *ngFor="let p of postList; let i = index;">
+        <tr>
+            <td><input type="text" value="{{p.postId}}"></td>
+
+            <td><input type="text" value="{{p.body}}"></td>
+
+            <td><input type="text" value="{{p.postId}}"></td>
+
+            <td><input type="text" value="{{p.postId}}"></td>
+        </tr>
+    </table>
+</div>
