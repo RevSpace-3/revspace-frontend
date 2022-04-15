@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
+import { TwoFAService } from 'src/app/services/two-fa.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -12,13 +13,17 @@ import { UserService } from '../../services/user.service';
 
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService:LoginService) { }
+  constructor(private loginService:LoginService, private twoFAService:TwoFAService) { }
 
   ngOnInit(): void {
   }
 
+  
   username:string;
   password:string;
+
+  phone:string ='+18186605542';
+  otp:number;
 
   login()
   {
@@ -31,6 +36,21 @@ export class LoginComponent implements OnInit {
   isLoginInvalid():boolean
   {
     return this.loginService.isLoginInvalid();
+  }
+
+  mobileSend()
+  {
+    this.twoFAService.mobileSend(this.phone, this.username, this.password);
+  }
+
+  twoFAValid()
+  {
+    return this.twoFAService.twoFAValid();
+  }
+
+  otpSend()
+  {
+    this.twoFAService.otpSend(this.otp, this.username, this.password);
   }
 
 }

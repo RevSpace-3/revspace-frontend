@@ -8,6 +8,7 @@ import { NotificationsModel } from './models/Notifications';
 import { Router } from '@angular/router';
 import { interval, Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TwoFAService } from './services/two-fa.service';
 
 
 
@@ -19,7 +20,7 @@ import { map } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   title = 'RevSpaceWebApp';
   notificationsList: NotificationsModel[] = [];
-  constructor(private loginService: LoginService, private notiService: NotificationsService, private router: Router) { }
+  constructor(private loginService: LoginService, private notiService: NotificationsService, private router: Router, private twoFAService:TwoFAService) { }
   ngOnInit(): void {
     timer(0, 5000).pipe(map(() => {
       // console.log("timer triggered");

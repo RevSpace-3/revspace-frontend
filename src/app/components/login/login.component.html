@@ -1,3 +1,8 @@
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <div >
     <h1 id="Header" style="  text-align: center; ;">Welcome To RevSpace</h1>
   </div>
@@ -7,7 +12,7 @@
     <div style="text-align: center; margin-bottom: 5%;"  class="login">    
         <label>
             <b>
-                Email      
+                Email    
             </b>    
         </label> 
         <br>   
@@ -23,7 +28,7 @@
         <input type="Password"  id="password" placeholder="Password" [(ngModel)]="password" (keydown.enter)=login()>    
         <br>
         <br>    
-        <input  type="button" id="login" value="Log In" (click)="login()">       
+        <input  type="button" id="login" value="Log In" (click)="login()">   
         <!-- Registration Modal -->
         
         <app-register-form></app-register-form>
@@ -33,6 +38,26 @@
         </div>
         <br>       
     </div>
+    <!-- 2 Factor Authentication-->
+    <div class="col-sm-3 justify-content-center" style="margin-top:6px">
+        <label for="sendotp"></label>
+          <input type="button" id="sendotp" class="btn btn-info" value="sendOtp" (click)="mobileSend()">
+        </div>
+    <div class="form-group row justify-content-center">
+        <div class="col-sm-3">
+          <input type="text" id="otp" placeholder="Enter Otp" [(ngModel)]="otp" autocomplete="off" (keydown.enter)="otpSend()"> <!-- (keydown.enter)="otpSend()"-->
+          <button type="submit" class="btn btn-success" (click)="otpSend()">Submit OTP</button>
+        </div>
+      </div>
+
+      <div class="modal-footer d-flex justify-content-center">
+        <div class="row">
+               
+               <div class="col-md-8">
+                   <button class="btn btn-dark" id="resendotp" (click)="mobileSend()">Resend OTP</button>
+               </div>
+       </div>
+     </div>
     
        
         

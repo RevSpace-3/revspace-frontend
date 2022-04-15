@@ -16,14 +16,23 @@
         <br>    
         <label>
             <b>
-                Password     
+                no    
             </b>    
         </label>
         <br>    
         <input type="Password"  id="password" placeholder="Password" [(ngModel)]="password" (keydown.enter)=login()>    
         <br>
         <br>    
-        <input  type="button" id="login" value="Log In" (click)="login()">       
+        <input  type="button" id="login" value="Log In" (click)="login()">  
+
+        <!-- 2 Factor Authentication -->
+        <div class="form-group row">
+            <div class="col-sm-3">
+              <input type="text" name="otp"class="form-control" placeholder="Enter Otp" autocomplete="off">
+            </div>
+          </div>
+        
+
         <!-- Registration Modal -->
         
         <app-register-form></app-register-form>
