@@ -11,6 +11,8 @@ export class TwoFAService {
   phoneTo:'+18186605542';
   phoneNo:number;
 
+  private invalidTwoFA = true;
+
   
 
   httpOptions = {
@@ -25,7 +27,6 @@ export class TwoFAService {
     public httpClient:HttpClient,
     private router:Router) { }
 
-  private invalidTwoFA = false;
   
 
   public mobileSend(phone:string, username:string, password:string)
@@ -40,6 +41,7 @@ export class TwoFAService {
       (response)=>{
         console.log(sendCode);
         alert(response);
+        this.router.navigate(['postfeed']);
         
       },
       ()=>
@@ -52,7 +54,7 @@ export class TwoFAService {
 
   public twoFAValid()
   {
-    return this.invalidTwoFA;
+    return !this.invalidTwoFA;
   }
 
   public otpSend(otp:number,username:string, password:string)
@@ -67,12 +69,14 @@ export class TwoFAService {
       (response)=>{
         console.log(sms);
         alert(response);
-        
+        this.invalidTwoFA = false;
       },
       ()=>
       {
         this.router.navigate(['']);
+        this.invalidTwoFA = true;
       }
     )
   }
+
 }

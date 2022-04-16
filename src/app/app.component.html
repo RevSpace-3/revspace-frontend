@@ -51,7 +51,9 @@
     </div>
   </div>
 </nav>
+
 <app-login *ngIf="!isLoggedIn()"></app-login>
+<app-otp *ngIf="isInvalid2FA()"></app-otp>
 <router-outlet *ngIf="isLoggedIn()"></router-outlet>
 
 <app-top style="position: sticky; left: 90%; top: 90%;"></app-top>

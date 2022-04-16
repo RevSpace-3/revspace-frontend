@@ -21,7 +21,8 @@ export class LoginComponent implements OnInit {
   
   username:string;
   password:string;
-
+  
+  // change phone number to twilio verified nuumber to receive OTP
   phone:string ='+18186605542';
   otp:number;
 

@@ -37,7 +37,8 @@ export class LoginService {
       (response)=>{
         this.loginInfo = new LoginInfo(response, authToken);
         this.invalidLogin = false;
-        this.router.navigate(['postfeed']);
+        //this.router.navigate(['postfeed']);
+        //this.router.navigate(['otp']);
       },
       ()=>
       {

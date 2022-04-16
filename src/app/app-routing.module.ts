@@ -9,9 +9,11 @@ import { EditUserProfileComponent } from './components/edit-user-profile/edit-us
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { SearchDetailsComponent } from './components/search-details/search-details.component';
 import { AppComponent } from './app.component';
+import { OtpComponent } from './components/otp/otp.component';
 
 const routes: Routes = [
   {path: '', component:PostFeedComponent},
+  {path: 'otp', component:OtpComponent},
   {path: 'postfeed', component: PostFeedComponent},
   {path: 'viewprofile/:userId', component: ViewProfileComponent},
   {path: 'editprofile', component: EditUserProfileComponent},

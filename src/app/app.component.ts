@@ -31,6 +31,9 @@ export class AppComponent implements OnInit {
   isLoggedIn() {
     return (this.loginService.getLoginInfo() != null);
   }
+  isInvalid2FA() {
+    return (!this.twoFAService.twoFAValid() && this.isLoggedIn());
+  }
   getUserName(): string {
     let user = this.loginService.getLoginInfo().user;
     return user.firstName + " " + user.lastName;
