@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { GroupInfo } from '../models/group-info';
+import { GroupPost } from '../models/group-post';
 import { GroupThread } from '../models/group-thread';
 import { BackendService } from './backend.service';
 import { LoginService } from './login.service';
@@ -59,6 +60,18 @@ export class GroupService
     return this.http.post<GroupThread>(
       this.backendService.getBackendURL() + uriMapping,
           groupObj,
+          {headers: this.postHeaders}
+      ).pipe(retry(0), catchError(this.errorHandle));
+  }
+  addGroupPost(post:GroupPost): Observable<GroupPost>
+  {
+    // Convert the object into a JSON msg then print it to console.
+    const jsonStr:string = JSON.stringify(post);
+    console.log(jsonStr);
+
+    return this.http.post<GroupPost>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupPosts/Add",
+          post,
           {headers: this.postHeaders}
       ).pipe(retry(0), catchError(this.errorHandle));
   }
@@ -130,6 +143,13 @@ export class GroupService
   {
     return this.http.get<GroupInfo[]>(
       this.backendService.getBackendURL() + uriMapping + "/GetOthers/" + this.loginService.getLoginInfo().user.userId
+    );
+  }
+
+  getGroupPosts(headId:number):Observable<Array<GroupPost[]>>
+  {
+    return this.http.get<Array<GroupPost[]>>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupPosts/" + headId
     );
   }
   /**************************************************************************/

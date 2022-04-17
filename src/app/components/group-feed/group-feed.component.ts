@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupInfo } from 'src/app/models/group-info';
+import { GroupPost } from 'src/app/models/group-post';
 import { Post } from 'src/app/models/Post';
 import { GroupService } from 'src/app/services/group.service';
 import { LikeHttpServiceService } from 'src/app/services/like-http-service.service';
@@ -23,7 +24,10 @@ export class GroupFeedComponent implements OnInit {
               @Inject(DOCUMENT) private document: Document, private groupService:GroupService) { }
 
 
-  postList:Post[] = [];
+  postResponse:Array<GroupPost[]>;
+  postList:GroupPost[] = [];
+  comments:GroupPost[] = [];
+
   @Input() group:GroupInfo;
   errMsg:string;
 
@@ -37,17 +41,23 @@ export class GroupFeedComponent implements OnInit {
   updatePosts()
   {
     this.getGroupPosts();
+    this.populateArrays(this.postResponse);
     this.printPosts();
     //this.router.navigate(['group-feed']);
   }
 
-  getGroupPosts() : Post[]
+  getGroupPosts() : Array<GroupPost[]>
   {
-    this.postHttpService.getGroupPosts(this.group.postHead.postId).subscribe(
-      (data) => { this.postList = data; }, (err) => { this.errMsg = err; }
+    this.groupService.getGroupPosts(this.group.postHead.postId).subscribe(
+      (data) => { this.postResponse = data; }, (err) => { this.errMsg = err; }
     );
 
-    return this.postList;
+    return this.postResponse;
+  }
+  populateArrays(response:Array<GroupPost[]>)
+  {
+    this.postList = response[0];
+    this.comments = response[1];
   }
   printPosts()
   {
@@ -58,6 +68,57 @@ export class GroupFeedComponent implements OnInit {
     }
   }
 
+  createDefaultComment(parent:GroupPost)
+  {
+    let temp:GroupPost = new GroupPost("Test Comment", "N/A", true, this.loginService.getLoginInfo().user, parent, null, null);
+    this.groupService.addGroupPost(temp).subscribe(
+      (data) => { temp = data; },
+      (err)  => { this.errMsg = err; console.log(this.errMsg); }
+    );
+  }
+
+  /*************************************************************************************/
+  // Legacy code
+  submitComment(parent:GroupPost)
+  {
+    // Testing logic
+    let commentInput = this.document.getElementById("commentInput" + parent.postId);
+    let commentInputElement = commentInput as HTMLInputElement;
+
+    let temp:GroupPost = new GroupPost(commentInputElement.value, new Date().toLocaleTimeString(), true, this.loginService.getLoginInfo().user, parent, null, null);
+    this.groupService.addGroupPost(temp).subscribe(
+      (data) => { temp = data; },
+      (err)  => { this.errMsg = err; console.log(this.errMsg); }
+    );
+  }
+  appendComments() : boolean
+  {
+    
+    for (let comment of this.comments) {
+
+      let parent = this.document.getElementById("attach" + comment.parent.postId);
+
+      parent.appendChild(this.document.getElementById("comment" + comment.postId));
+    }
+    return true;
+  }
+
+  getIndent(comment: GroupPost): number {
+
+    if (comment.parent.comment) {
+
+      return 50;
+
+    } else {
+
+      return 0;
+    }
+  }
+
+  navToProfile(post:GroupPost)
+  {
+    this.router.navigate(['viewprofile/' + post.owner.userId]);
+  }
   
 
 }

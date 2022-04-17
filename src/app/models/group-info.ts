@@ -1,3 +1,4 @@
+import { GroupPost } from "./group-post";
 import { Post } from "./Post";
 import { User } from "./User";
 
@@ -9,9 +10,9 @@ export class GroupInfo
     interests!:string;// To Do. Update logic to support group interest field
     dateCreated!:string;
     owner!:User;
-    postHead!:Post;
+    postHead!:GroupPost;
 
-    public constructor(name:string, desc:string, inter:string, ownr:User, post:Post)
+    public constructor(name:string, desc:string, inter:string, ownr:User, post:GroupPost)
     {
         //this.infoId = id;
         this.groupName = name;

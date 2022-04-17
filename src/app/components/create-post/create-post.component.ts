@@ -75,11 +75,11 @@ export class CreatePostComponent implements OnInit {
     image: this.urlLink, 
     date: new Date().getTime(), 
     comment: false,
-    parentPost: (this.groupRef != null) ? this.groupRef.postHead : null, ///////////I changed this!!! It was parentPost: null
+    parentPost: null, ///////////I changed this!!! It was parentPost: null
     
     postId:0
     }
-    console.log("Current Head" + this.groupRef.postHead.creatorId );
+    //console.log("Current Head" + this.groupRef.postHead.creatorId );
     //CALLING ADD POST SERVICE TO SEND NEW POST
     this.postService.addPost(this.post)
    .subscribe(data =>{
