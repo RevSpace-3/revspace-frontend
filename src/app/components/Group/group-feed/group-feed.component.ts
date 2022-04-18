@@ -109,7 +109,8 @@ export class GroupFeedComponent implements OnInit {
     let temp:GroupPost = new GroupPost(commentInputElement.value, new Date().toLocaleTimeString(), true, this.loginService.getLoginInfo().user, parent, null, null);
     this.groupService.addGroupPost(temp).subscribe(
       (data) => { temp = data; },
-      (err)  => { this.errMsg = err; console.log(this.errMsg); }
+      (err)  => { this.errMsg = err; console.log(this.errMsg); },
+      () => { this.comments.push(temp); }
     );
 
   }

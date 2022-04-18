@@ -3,57 +3,57 @@
 <app-hub-navbar></app-hub-navbar>
 <body>
     <h1>{{errMsg}}</h1>
-    <form class="viewGroupsForm" >
-        <table class="table" >
-            <tr class="d-flex justify-content-center">
-                <div class="shadow w-75 p-3 mb-5 bg-white rounded">
-                    <div class="row">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-2">
-                                <div class="form-control">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control" readonly value="{{group.groupName}}">
-                                </div>
-                            </div>
+    <div class="row">
+        <div class="col-md-2">
+            <form class="viewGroupsForm" >
+                <div class="d-flex justify-content-center">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <label>Name</label>
+                        <h4>{{group.groupName}}</h4>
+                    </li>
+                    <br/>
+                    <li class="list-group-item">
+                        <label>Description</label>
+                        <h4>{{group.description}}</h4>
+                    </li>
 
-                            <div class="col-5">
-                                <div class="form-control">
-                                    <label>Description</label>
-                                    <input type="text" class="form-control" readonly value="{{group.description}}">
-                                </div>
+                    <br/>
+                    <li class="list-group-item">
+                        <label>Interests</label>
+                        <h4>{{group.interests}}</h4>
+                    </li>
+                    <br/>
+                    <li class="list-group-item" (click)="navToProfile(group.owner)">
+                        <label>Creator</label>
+                        <h3>{{group.owner.firstName + " " + group.owner.lastName}}</h3>
+                    </li>
+                </ul>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-8">
+            <app-group-feed [group]="group"></app-group-feed>
+        </div>
+        <div class="col-md-2">
+            <div class="d-flex justify-content-center">
+                <div class="shadow w-75 p-3 mb-5 bg-white rounded">
+                    <div class="list-group">
+                        <label><strong>Members</strong></label>
+                        <div *ngFor="let thread of threads; let i = index;" (click)="navToProfile(thread.member)">
+                            <div class="list-group-item list-group-item-action list-group-item-primary" *ngIf="thread.member.userId == thread.groupInfo.owner.userId; else notOwner">
+                                {{thread.member.firstName + " " + thread.member.lastName}}
                             </div>
-                        </div>
-                    <div class="row">
-                        <div class="d-flex justify-content-center">
-                            <div class="col-4">
-                                <div class="form-control">
-                                    <label>Interests</label>
-                                    <input type="text" class="form-control" readonly value="{{group.interests}}">
+                            <ng-template #notOwner>
+                               <div class="list-group-item list-group-item-action">
+                                   {{thread.member.firstName + " " + thread.member.lastName}}
                                 </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-control">
-                                    <label>Creator</label>
-                                    <input type="text" class="form-control" readonly value="{{group.owner.email}}">
-                                </div>
-                            </div>
+                            </ng-template>
                         </div>
                     </div>
                 </div>
-        </div>
-        </tr>
-    </table>
-    </form>
-    <div class="d-flex justify-content-center">
-        <div class="shadow w-75 p-3 mb-5 bg-white rounded">
-            <div class="form-control">
-                <ul class="list-group" *ngFor="let thread of threads; let i = index;">
-                    <label>Name </label>
-                    <li class="list-group-item">{{thread.member.firstName + " " + thread.member.lastName}}</li>
-                </ul>
             </div>
         </div>
     </div>
-    <app-group-feed [group]="group"></app-group-feed>
 </body>
 </html>
