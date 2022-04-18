@@ -41,6 +41,9 @@ export class JoinGroupComponent implements OnInit {
     console.log("Opening Group of index i=" + index);
     this.groupService.setCurrentGroup(this.groups[index]);
     this.showGroup = true;
+
+
+    //this.groupService.
   }
   closeGroup()
   {
