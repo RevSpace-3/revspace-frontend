@@ -16,10 +16,20 @@
                     <input type="text" class="form-control" formControlName="description">
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-3">
                 <div class="form-control">
                     <label>Group Interests</label>
                     <input type="text" class="form-control" formControlName="interests">
+                    <input type="button" class="btn btn-danger" value="Add" (click)="addInterest()">
+                </div>
+            </div>
+            <div class="col-3">
+                <div *ngFor="let str in interestArray; let i = index;">
+                    <div class="list-group">
+                        <div class="list-group-item list-group-item-action">
+                            <h4>{{str}}</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -22,6 +22,8 @@ export class CreateGroupComponent implements OnInit {
   errorMsg!:string;
   sucMsg!:string;
 
+  interestArray:string[] = [];
+
 
   // may need a router dependency
   constructor( public router:Router, public formBuilder:FormBuilder, public groupService:GroupService, public loginService:LoginService) { }
@@ -48,11 +50,22 @@ export class CreateGroupComponent implements OnInit {
     console.log("GroupName: " + this.groupForm.get('groupName').value);
     console.log("description: " + this.groupForm.get('description').value);
     console.log("interests: " + this.groupForm.get('interests').value);
+
+    let intRes:string = "";
+
+    for(let i = 0; i < this.interestArray.length; i++)
+    {
+      if(i > 0)
+        intRes.concat(this.interestArray[i] + ", ");
+      else
+        intRes.concat(this.interestArray[i]);
+    }
+
     let info:GroupInfo = 
     new GroupInfo(
       this.groupForm.get('groupName').value, 
       this.groupForm.get('description').value, 
-      this.groupForm.get('interests').value, 
+      intRes, 
       curUser, 
       new GroupPost("Group Head " + this.groupForm.get('groupName').value + " Post", "N/A", false, this.loginService.getLoginInfo().user, null, null, null)); // Creating a head for our tree
 
@@ -82,6 +95,12 @@ export class CreateGroupComponent implements OnInit {
     console.log("-----------------");
     console.log("Owner");
     console.log(group.groupInfo.owner.email);
+  }
+
+  addInterest()
+  {
+    console.log(this.groupForm.get('interests').value);
+    this.interestArray.push(this.groupForm.get('interests').value);
   }
 
   onClick()

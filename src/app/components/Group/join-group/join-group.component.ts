@@ -4,6 +4,7 @@ import { GroupService } from 'src/app/services/group.service';
 
 import { GroupThread } from 'src/app/models/group-thread';
 import { GroupInfo } from 'src/app/models/group-info';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-join-group',
@@ -21,7 +22,7 @@ export class JoinGroupComponent implements OnInit {
 
   @Output() toggleGroup:EventEmitter<boolean> = new EventEmitter();
 
-  constructor(public groupService:GroupService) { }
+  constructor(public groupService:GroupService, private router:Router) { }
 
   ngOnInit(): void
   {
@@ -42,7 +43,7 @@ export class JoinGroupComponent implements OnInit {
     console.log("Opening Group of index i=" + index);
     this.groupService.setCurrentGroup(this.groups[index]);
     this.showGroup = true;
-
+    this.router.navigateByUrl("/group-page");
 
     //this.groupService.
   }

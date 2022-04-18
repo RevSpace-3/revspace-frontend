@@ -96,7 +96,7 @@ export class GroupService
   deleteGroup(groupId:number): Observable<GroupThread>
   {
     return this.http.delete<GroupThread>(
-        this.backendService.getBackendURL() + uriMapping + "/" + groupId );
+        this.backendService.getBackendURL() + uriMapping + "/Delete/Thread" + groupId );
   }
 
   /**************************************************************************/
