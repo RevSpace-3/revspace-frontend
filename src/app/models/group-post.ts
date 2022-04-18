@@ -6,6 +6,7 @@ export class GroupPost
     postId:number;
 
     body:string;
+    image:string;
     datePosted:string;
 
     numOfLikes:number;
@@ -17,9 +18,10 @@ export class GroupPost
 
     likes:Array<Like>;
 
-    constructor(body:string, date:string, comment:boolean, user:User, parent:GroupPost, child:GroupPost, likes:Array<Like>)
+    constructor(body:string, image:string, date:string, comment:boolean, user:User, parent:GroupPost, child:GroupPost, likes:Array<Like>)
     {
         this.body = body;
+        this.image = image;
         this.datePosted = date;
         this.numOfLikes = 0;
         this.comment = comment;

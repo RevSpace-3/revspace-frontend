@@ -56,6 +56,16 @@
                                 </div>
                             </ng-template>
                         </div>
+                        <div *ngIf="ownerFlag">
+                            <input type="button" class="btn btn-danger" value="Delete Group" (click)="deleteGroup()"> 
+                        </div>
+
+                            <div class="list-group">
+                                <div class="list-group-item list-group-item-action" *ngFor="let str in interestArray; let i = index;">
+                                    <h5>{{str}}</h5>
+                                </div>
+                            </div>
+
                     </div>
                 </div>
             </div>

@@ -56,9 +56,9 @@ export class CreateGroupComponent implements OnInit {
     for(let i = 0; i < this.interestArray.length; i++)
     {
       if(i > 0)
-        intRes.concat(this.interestArray[i] + ", ");
+        intRes = intRes + ", " + this.interestArray[i];
       else
-        intRes.concat(this.interestArray[i]);
+        intRes = intRes + this.interestArray[i];
     }
 
     let info:GroupInfo = 
@@ -67,7 +67,7 @@ export class CreateGroupComponent implements OnInit {
       this.groupForm.get('description').value, 
       intRes, 
       curUser, 
-      new GroupPost("Group Head " + this.groupForm.get('groupName').value + " Post", "N/A", false, this.loginService.getLoginInfo().user, null, null, null)); // Creating a head for our tree
+      new GroupPost("Group Head " + this.groupForm.get('groupName').value + " Post","N/A", "N/A", false, this.loginService.getLoginInfo().user, null, null, null)); // Creating a head for our tree
 
     console.log("Info -> " + info);
     let thread:GroupThread = new GroupThread(info, curUser);
@@ -99,13 +99,20 @@ export class CreateGroupComponent implements OnInit {
 
   addInterest()
   {
-    console.log(this.groupForm.get('interests').value);
-    this.interestArray.push(this.groupForm.get('interests').value);
+    let val:string = this.groupForm.get('interests').value;
+    console.log(val);
+    this.interestArray.push(val);
   }
 
   onClick()
   {
-    this.router.navigateByUrl("/view-groups"); 
+    this.router.navigateByUrl("/group-hub"); 
+  }
+
+  removeInterestOnClick(ele:string)
+  {
+    let index:number = this.interestArray.indexOf(ele);
+    this.interestArray.splice(index, 1);
   }
 
 }

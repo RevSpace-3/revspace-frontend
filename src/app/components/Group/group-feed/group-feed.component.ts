@@ -85,7 +85,7 @@ export class GroupFeedComponent implements OnInit {
 
   createDefaultComment(parent:GroupPost)
   {
-    let temp:GroupPost = new GroupPost("Test Comment", "N/A", true, this.loginService.getLoginInfo().user, parent, null, null);
+    let temp:GroupPost = new GroupPost("Test Comment", "N/A", "N/A", true, this.loginService.getLoginInfo().user, parent, null, null);
     this.groupService.addGroupPost(temp).subscribe(
       (data) => { temp = data; },
       (err)  => { this.errMsg = err; console.log(this.errMsg); }
@@ -106,7 +106,7 @@ export class GroupFeedComponent implements OnInit {
     let commentInput = this.document.getElementById("commentInput" + parent.postId);
     let commentInputElement = commentInput as HTMLInputElement;
 
-    let temp:GroupPost = new GroupPost(commentInputElement.value, new Date().toLocaleTimeString(), true, this.loginService.getLoginInfo().user, parent, null, null);
+    let temp:GroupPost = new GroupPost(commentInputElement.value, "N/A",new Date().toLocaleTimeString(), true, this.loginService.getLoginInfo().user, parent, null, null);
     this.groupService.addGroupPost(temp).subscribe(
       (data) => { temp = data; },
       (err)  => { this.errMsg = err; console.log(this.errMsg); },
@@ -114,6 +114,9 @@ export class GroupFeedComponent implements OnInit {
     );
 
   }
+
+
+
   appendComments() : boolean
   {
     

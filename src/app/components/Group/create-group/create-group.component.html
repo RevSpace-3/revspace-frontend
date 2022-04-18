@@ -24,9 +24,9 @@
                 </div>
             </div>
             <div class="col-3">
-                <div *ngFor="let str in interestArray; let i = index;">
+                <div *ngFor="let str of interestArray">
                     <div class="list-group">
-                        <div class="list-group-item list-group-item-action">
+                        <div class="list-group-item list-group-item-action" (click)="removeInterestOnClick(str)">
                             <h4>{{str}}</h4>
                         </div>
                     </div>

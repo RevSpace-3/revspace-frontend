@@ -23,7 +23,9 @@ export class ViewGroupsComponent implements OnInit
   ngOnInit(): void
   {
     this.title = 'groups';
-    this.groupService.getGroupsByMembership().subscribe((data)=>{ this.groups = data;}, err => this.errMsg = err );
+    this.groupService.getGroupsByMembership().subscribe(
+      (data)  =>  { this.groups = data;}, 
+      (err)   =>  { this.errMsg = err; });
   }
 
   openGroup(index:number)

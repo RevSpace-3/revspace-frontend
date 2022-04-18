@@ -71,7 +71,7 @@ export class GroupPageComponent implements OnInit
                   }
     );
     this.joinFlag = false; 
-    this.router.navigate(['/view-groups']);
+    this.router.navigate(['group-hub']);
     
   }
   getCurUserThread() : GroupThread
@@ -96,7 +96,17 @@ export class GroupPageComponent implements OnInit
                 }
     );
     this.joinFlag = true; 
-    this.router.navigate(['/view-groups']);
+    this.router.navigate(['group-hub']);
+  }
+
+  deleteGroup()
+  {
+    this.groupService.deleteGroupPage(this.getCurUserThread().groupInfo.infoId).subscribe(
+      (data)  =>  { console.log(data); },
+      (err)   =>  { console.log(err); },
+      ()      =>  {  }
+    );
+    this.router.navigate(['group-hub']);
   }
   navToProfile(user:User)
   {

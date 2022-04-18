@@ -98,6 +98,11 @@ export class GroupService
     return this.http.delete<GroupThread>(
         this.backendService.getBackendURL() + uriMapping + "/Delete/Thread" + groupId );
   }
+  deleteGroupPage(groupInfoId:number): Observable<String>
+  {
+    return this.http.delete<String>(
+      this.backendService.getBackendURL() + uriMapping + "/Delete/" + groupInfoId );
+  }
 
   /**************************************************************************/
   // Gets
