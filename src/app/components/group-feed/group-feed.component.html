@@ -1,20 +1,6 @@
-<p>group-feed works!</p>
+<input class="btn btn-dark" type="button" (click)="updatePosts()" value="Update Posts">
 
-<input type="button" (click)="updatePosts()" value="Update Posts">
-
-<div>
-    <table *ngFor="let p of postList; let i = index;">
-        <tr>
-            <td><input type="text" value="{{p.postId}}"></td>
-
-            <td><input type="text" value="{{p.body}}"></td>
-
-            <td><input type="text" value="{{p.postId}}"></td>
-
-            <td><input type="text" value="{{p.postId}}"></td>
-        </tr>
-    </table>
-</div>
+<app-create-group-post (event)="addNewPost($event)"></app-create-group-post>
 
 <div class="container mt-4 mb-5">
     <div class="d-flex justify-content-center row">

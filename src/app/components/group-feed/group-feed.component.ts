@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupInfo } from 'src/app/models/group-info';
 import { GroupPost } from 'src/app/models/group-post';
@@ -28,14 +28,21 @@ export class GroupFeedComponent implements OnInit {
   postList:GroupPost[] = [];
   comments:GroupPost[] = [];
 
+  lastLoadTime: number = 0;
+
   @Input() group:GroupInfo;
   errMsg:string;
 
   ngOnInit(): void 
   {
-    this.getGroupPosts();
+    //this.getGroupPosts();
+    this.groupService.getGroupPosts(this.group.postHead.postId).subscribe(
+      (data) => { this.postResponse = data; }, 
+      (err) => { this.errMsg = err; },
+      () => { this.populateArrays(this.postResponse); }
+    );
 
-    this.printPosts();
+   // this.printPosts();
   }
 
   updatePosts()
@@ -43,13 +50,14 @@ export class GroupFeedComponent implements OnInit {
     this.getGroupPosts();
     this.populateArrays(this.postResponse);
     this.printPosts();
-    //this.router.navigate(['group-feed']);
   }
 
   getGroupPosts() : Array<GroupPost[]>
   {
     this.groupService.getGroupPosts(this.group.postHead.postId).subscribe(
-      (data) => { this.postResponse = data; }, (err) => { this.errMsg = err; }
+      (data) => { this.postResponse = data; }, 
+      (err) => { this.errMsg = err; },
+      () => { this.ngOnInit(); }
     );
 
     return this.postResponse;
@@ -58,6 +66,7 @@ export class GroupFeedComponent implements OnInit {
   {
     this.postList = response[0];
     this.comments = response[1];
+    
   }
   printPosts()
   {
@@ -75,6 +84,12 @@ export class GroupFeedComponent implements OnInit {
       (data) => { temp = data; },
       (err)  => { this.errMsg = err; console.log(this.errMsg); }
     );
+    
+  }
+  addNewPost(post:GroupPost)
+  {
+    this.postList.push(post);
+    this.ngOnInit();
   }
 
   /*************************************************************************************/
@@ -90,6 +105,7 @@ export class GroupFeedComponent implements OnInit {
       (data) => { temp = data; },
       (err)  => { this.errMsg = err; console.log(this.errMsg); }
     );
+
   }
   appendComments() : boolean
   {
@@ -120,5 +136,18 @@ export class GroupFeedComponent implements OnInit {
     this.router.navigate(['viewprofile/' + post.owner.userId]);
   }
   
+  @HostListener("window:scroll", [])
+  onScroll(): void {
+
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+
+      if (Date.now() - this.lastLoadTime > 1000) {
+
+        this.updatePosts();
+
+        this.lastLoadTime = Date.now();
+      }
+    } 
+  }
 
 }
