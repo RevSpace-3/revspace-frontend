@@ -21,14 +21,16 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchDetailsComponent } from './components/search-details/search-details.component';
 import { ViewProfileComponent } from './components/view-profile/view-profile.component';
-import { ViewGroupsComponent } from './components/view-groups/view-groups.component';
-import { ViewGroupThreadComponent } from './components/view-group-thread/view-group-thread.component';
-import { CreateGroupComponent } from './components/create-group/create-group.component';
-import { JoinGroupComponent } from './components/join-group/join-group.component';
-import { GroupPageComponent } from './components/group-page/group-page.component';
-import { GroupChatComponent } from './components/group-chat/group-chat.component';
-import { GroupFeedComponent } from './components/group-feed/group-feed.component';
-import { CreateGroupPostComponent } from './components/create-group-post/create-group-post.component';
+import { ViewGroupsComponent } from './components/Group/view-groups/view-groups.component';
+import { ViewGroupThreadComponent } from './components/Group/view-group-thread/view-group-thread.component';
+import { CreateGroupComponent } from './components/Group/create-group/create-group.component';
+import { JoinGroupComponent } from './components/Group/join-group/join-group.component';
+import { GroupPageComponent } from './components/Group/group-page/group-page.component';
+import { GroupChatComponent } from './components/Group/group-chat/group-chat.component';
+import { GroupFeedComponent } from './components/Group/group-feed/group-feed.component';
+import { CreateGroupPostComponent } from './components/Group/create-group-post/create-group-post.component';
+import { GroupHubComponent } from './components/Group/group-hub/group-hub.component';
+import { HubNavbarComponent } from './components/Group/hub-navbar/hub-navbar.component';
 
 
 
@@ -55,7 +57,9 @@ import { CreateGroupPostComponent } from './components/create-group-post/create-
     GroupPageComponent,
     GroupChatComponent,
     GroupFeedComponent,
-    CreateGroupPostComponent
+    CreateGroupPostComponent,
+    GroupHubComponent,
+    HubNavbarComponent //
   ],
   
   imports: [

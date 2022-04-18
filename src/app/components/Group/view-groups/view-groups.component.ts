@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { GroupService } from 'src/app/services/group.service';
-import { SearchBarComponent } from '../search-bar/search-bar.component';
+
 import { GroupThread } from 'src/app/models/group-thread';
 import { GroupInfo } from 'src/app/models/group-info';
 import { Router } from '@angular/router';

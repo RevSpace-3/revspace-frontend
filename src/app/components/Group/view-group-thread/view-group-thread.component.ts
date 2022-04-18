@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { GroupInfo } from 'src/app/models/group-info';
 import { GroupThread } from 'src/app/models/group-thread';
 import { GroupService } from 'src/app/services/group.service';
@@ -19,7 +20,7 @@ export class ViewGroupThreadComponent implements OnInit, OnChanges {
   @Input() updateFlag:boolean;
   @Output() eventEmitter = new EventEmitter<boolean>();
 
-  constructor(public groupService:GroupService, public loginService:LoginService) { }
+  constructor(public groupService:GroupService, public loginService:LoginService, private router:Router) { }
 
   ngOnInit(): void
   {
@@ -39,7 +40,7 @@ export class ViewGroupThreadComponent implements OnInit, OnChanges {
     console.log("Group Name: " + nGroup.groupInfo.groupName);
     console.log("User Name: " + nGroup.member.email);
 
-    this.groupService.addGroup(nGroup).subscribe((data)=>{nGroup = data;}, err => this.errMsg = err);
+    this.groupService.addGroup(nGroup).subscribe((data)=>{nGroup = data;}, err => this.errMsg = err, () => this.router.navigateByUrl("/view-groups"));
     
     console.log(this.errMsg);
     console.log(this.group);

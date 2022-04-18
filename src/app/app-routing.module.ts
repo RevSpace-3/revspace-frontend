@@ -9,12 +9,13 @@ import { EditUserProfileComponent } from './components/edit-user-profile/edit-us
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { SearchDetailsComponent } from './components/search-details/search-details.component';
 import { AppComponent } from './app.component';
-import { ViewGroupsComponent } from './components/view-groups/view-groups.component';
-import { CreateGroupComponent } from './components/create-group/create-group.component';
-import { JoinGroupComponent } from './components/join-group/join-group.component';
-import { GroupPageComponent } from './components/group-page/group-page.component';
+import { ViewGroupsComponent } from './components/Group/view-groups/view-groups.component';
+import { CreateGroupComponent } from './components/Group/create-group/create-group.component';
+import { JoinGroupComponent } from './components/Group/join-group/join-group.component';
+import { GroupPageComponent } from './components/Group/group-page/group-page.component';
 import { PopulateFeedComponent } from './components/populate-feed/populate-feed.component';
-import { GroupFeedComponent } from './components/group-feed/group-feed.component';
+import { GroupFeedComponent } from './components/Group/group-feed/group-feed.component'; 
+import { GroupHubComponent } from './components/Group/group-hub/group-hub.component';
 
 const routes: Routes = [
   {path: '', component:PostFeedComponent},
@@ -27,7 +28,7 @@ const routes: Routes = [
   {path: 'create-group', component: CreateGroupComponent},
   {path: 'join-groups', component: JoinGroupComponent},
   {path: 'group-page', component: GroupPageComponent},
-  {path: 'group-page', component: GroupPageComponent},
+  {path: 'group-hub', component: GroupHubComponent},
   {path: 'populate-feed', component: PopulateFeedComponent},
   {path: 'group-feed', component: GroupFeedComponent}
 ];

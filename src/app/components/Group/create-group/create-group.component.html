@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<app-hub-navbar></app-hub-navbar>
+
+<form class="createGroupForm" [formGroup]="groupForm" (ngSubmit)="bindModel()" >
+    <fieldset>
+        <div class="form-control">
+            <label>Group Name</label>
+            <input type="text" class="form-control" formControlName="groupName">
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-control">
+                    <label>Group Description</label>
+                    <input type="text" class="form-control" formControlName="description">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-control">
+                    <label>Group Interests</label>
+                    <input type="text" class="form-control" formControlName="interests">
+                </div>
+            </div>
+        </div>
+        <div class="doesStuff">
+            <input type="submit" class="btn btn-success createGroupSubmit">
+        </div>
+    </fieldset>
+</form>
+
+
+<br><br><br>
+<hr color="black">
+<br><br>
+
+
+
+<!--</body>-->
+</html>

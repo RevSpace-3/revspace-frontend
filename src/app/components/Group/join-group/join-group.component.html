@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <app-hub-navbar></app-hub-navbar>
 <body>
     <div class="container-fluid">
         <div *ngIf="showGroup">
@@ -7,7 +8,7 @@
            
         </div>
         <h1>{{errMsg}}</h1>
-        <h1 *ngIf="groups == undefined"> No Available Groups To Join :/ </h1>
+        <h1 >{{statusMsg}}</h1>
         <form class="viewGroupsForm" >
             <table class="table" *ngFor="let group of groups; let i = index;">
                 <tr class="d-flex justify-content-center">

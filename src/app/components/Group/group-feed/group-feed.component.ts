@@ -49,7 +49,7 @@ export class GroupFeedComponent implements OnInit {
   {
     this.getGroupPosts();
     this.populateArrays(this.postResponse);
-    this.printPosts();
+    //this.printPosts();
   }
 
   getGroupPosts() : Array<GroupPost[]>
@@ -64,9 +64,15 @@ export class GroupFeedComponent implements OnInit {
   }
   populateArrays(response:Array<GroupPost[]>)
   {
-    this.postList = response[0];
-    this.comments = response[1];
-    
+    if(response != null)
+    {
+      this.postList = response[0] != null ? response[0] : [];
+      this.comments = response[1] != null ? response[1] : [];
+    }
+    else
+    {
+      console.log("There are currently no posts for this group.");
+    } 
   }
   printPosts()
   {

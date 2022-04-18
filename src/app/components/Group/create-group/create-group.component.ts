@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { GroupInfo } from 'src/app/models/group-info';
 import { GroupPost } from 'src/app/models/group-post';
@@ -23,7 +24,7 @@ export class CreateGroupComponent implements OnInit {
 
 
   // may need a router dependency
-  constructor(public formBuilder:FormBuilder, public groupService:GroupService, public loginService:LoginService) { }
+  constructor( public router:Router, public formBuilder:FormBuilder, public groupService:GroupService, public loginService:LoginService) { }
 
 
   ngOnInit(): void 
@@ -63,10 +64,10 @@ export class CreateGroupComponent implements OnInit {
     let tempThread:GroupThread = null;
 
     this.groupService.addGroup(thread).subscribe(
-               (data) => tempThread = data), err => this.errorMsg = err;
-
-    console.log("Result of addGroup(): " + tempThread); // Check if an object exists in memory
-    this.printGroup(tempThread);
+               (data) => tempThread = data, 
+               err => this.errorMsg = err,
+               () => { this.onClick(); });
+      this.onClick();
   }
   printGroup(group:GroupThread)
   {
@@ -81,6 +82,11 @@ export class CreateGroupComponent implements OnInit {
     console.log("-----------------");
     console.log("Owner");
     console.log(group.groupInfo.owner.email);
+  }
+
+  onClick()
+  {
+    this.router.navigateByUrl("/view-groups"); 
   }
 
 }
