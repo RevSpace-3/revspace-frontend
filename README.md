@@ -29,4 +29,17 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 >>>>>>> 0d87c28 (GroupService and Group models created).
+=======
+>>>>>>> 32add94e840ef5ed51b09489a54d00ffb5818baa
+>>>>>>> 0d87c28 (GroupService and Group models created)
+
+
+changed by tay
+<<<<<<< HEAD
+>>>>>>> 696b4b8383b805474b22254d2f5861c87c21ba0d
+=======
+>>>>>>> 696b4b8383b805474b22254d2f5861c87c21ba0d

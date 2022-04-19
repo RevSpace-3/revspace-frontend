@@ -9,7 +9,7 @@
     <div>
       <h6 style="align-items: center;">Dark Mode</h6>
       <label class="switch">
-        <input type="checkbox" [checked]="darkMode$ | async" (change)="onToggle()" class="dm-btn"/>
+        <input type="checkbox"  (change)="onToggle()" class="dm-btn"/>
         <span class="slider round"></span>
       </label>
     </div>
@@ -33,6 +33,10 @@
           Hello, {{getUserName()}}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <!-- <li><a class="dropdown-item" [routerLink]="['/viewprofile', getUserId()]">View Your Profile</a></li> -->
+          <li><a class="dropdown-item" [routerLink]="['/editprofile']">Profile</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/changePassword']">Change Password</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/view-groups']">Groups</a></li>
           <li><a class="dropdown-item" [routerLink]="['/viewprofile', getUserId()]">View Your Profile</a></li>
           <li><a class="dropdown-item" [routerLink]="['/editprofile']">Edit Your Profile</a></li>
           <li><a class="dropdown-item" href="index.html">Logout</a></li>

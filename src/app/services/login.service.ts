@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Credentials } from '../models/Credentials';
 import { LoginInfo } from '../models/LoginInfo';
 import { User } from '../models/User';
 import { BackendService } from './backend.service';

@@ -2,6 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { GroupInfo } from '../models/group-info';
+import { GroupLike } from '../models/group-like';
+import { GroupPost } from '../models/group-post';
 import { GroupThread } from '../models/group-thread';
 import { BackendService } from './backend.service';
 import { LoginService } from './login.service';
@@ -22,10 +25,30 @@ export class GroupService
 
   authToken:string = this.loginService.getLoginInfo().authToken; // Get auth token from user
 
+  private currentGroup:GroupInfo = null;
+
   postHeaders = new HttpHeaders({
     'Context-Type': 'application/json',
     'Authorization': this.authToken
   });
+
+  /**************************************************************************/
+  // Getters
+
+  getCurrentGroup():GroupInfo
+  {
+    return this.currentGroup;
+  }
+
+  /**************************************************************************/
+  // Setters
+  setCurrentGroup( group:GroupInfo )
+  {
+    if(group != null || group != undefined)
+      this.currentGroup = group;
+
+    console.log("CurrentGroup was set to: " + this.currentGroup);
+  }
 
   /**************************************************************************/
   // Posts
@@ -37,11 +60,33 @@ export class GroupService
 
     return this.http.post<GroupThread>(
       this.backendService.getBackendURL() + uriMapping,
-          jsonStr,//JSON.stringify(groupObj),
+          groupObj,
           {headers: this.postHeaders}
-      ).pipe(retry(1), catchError(this.errorHandle));
+      ).pipe(retry(0), catchError(this.errorHandle));
   }
+  addGroupPost(post:GroupPost): Observable<GroupPost>
+  {
+    // Convert the object into a JSON msg then print it to console.
+    const jsonStr:string = JSON.stringify(post);
+    console.log(jsonStr);
 
+    return this.http.post<GroupPost>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupPosts/Add",
+          post,
+          {headers: this.postHeaders}
+      ).pipe(retry(0), catchError(this.errorHandle));
+  }
+  addGroupLike(like:GroupLike): Observable<GroupLike>
+  {
+    const jsonStr:string = JSON.stringify(like);
+    console.log(jsonStr);
+
+    return this.http.post<GroupLike>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupLikes",
+      like,
+      {headers: this.postHeaders}
+  ).pipe(retry(0), catchError(this.errorHandle));
+  }
   /**************************************************************************/
   // Puts
   updateGroup(groupObj:GroupThread): Observable<GroupThread>
@@ -52,7 +97,7 @@ export class GroupService
 
     return this.http.put<GroupThread>(
       this.backendService.getBackendURL() + uriMapping,
-          jsonStr,//JSON.stringify(groupObj),
+          groupObj,
           {headers: this.postHeaders}
       ).pipe(retry(1), catchError(this.errorHandle));
   }
@@ -62,7 +107,18 @@ export class GroupService
   deleteGroup(groupId:number): Observable<GroupThread>
   {
     return this.http.delete<GroupThread>(
-        this.backendService.getBackendURL() + uriMapping + "/" + groupId );
+        this.backendService.getBackendURL() + uriMapping + "/Delete/Thread" + groupId );
+  }
+  deleteGroupPage(groupInfoId:number): Observable<String>
+  {
+    return this.http.delete<String>(
+      this.backendService.getBackendURL() + uriMapping + "/Delete/" + groupInfoId );
+  }
+  deleteGroupLike(like:GroupLike): Observable<String>
+  {
+    let id:number = like.likeId;
+    return this.http.delete<String>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupLikes/" + id );
   }
 
   /**************************************************************************/
@@ -84,10 +140,60 @@ export class GroupService
   getAllGroups(): Observable<GroupThread[]>
   {
     return this.http.get<GroupThread[]>(
-      this.backendService.getBackendURL() + uriMapping + "/GetAllGroups"
+      this.backendService.getBackendURL() + uriMapping + "/GetAll"
+    );
+  }
+  getAllUniqueGroups(): Observable<GroupThread[]>
+  {
+    return this.http.get<GroupThread[]>(
+      this.backendService.getBackendURL() + uriMapping + "/ByUnique"
+    );
+  }
+  getThreadsByGroupInfo(): Observable<GroupThread[]>
+  {
+    return this.http.get<GroupThread[]>(
+      this.backendService.getBackendURL() + uriMapping + "/GetThreads/" + this.currentGroup.infoId
+    );
+  }
+  getGroupsByMembership():Observable<GroupInfo[]>
+  {
+    return this.http.get<GroupInfo[]>(
+      this.backendService.getBackendURL() + uriMapping + "/ByMembership/" + this.loginService.getLoginInfo().user.userId
+    );
+  }
+  getOtherGroups():Observable<GroupInfo[]>
+  {
+    return this.http.get<GroupInfo[]>(
+      this.backendService.getBackendURL() + uriMapping + "/GetOthers/" + this.loginService.getLoginInfo().user.userId
     );
   }
 
+  getGroupPosts(headId:number):Observable<Array<GroupPost[]>>
+  {
+    return this.http.get<Array<GroupPost[]>>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupPosts/" + headId
+    );
+  }
+
+  getGroupsByInterest(interest:string):Observable<GroupInfo[]>
+  {
+    return this.http.get<GroupInfo[]>(
+      this.backendService.getBackendURL() + uriMapping + "/" + interest.toLocaleLowerCase()
+    );
+  }
+
+  getGroupLikesByGroup(groupHeadId:number):Observable<GroupLike[]>
+  {
+    return this.http.get<GroupLike[]>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupLikes/Group" + groupHeadId
+    );
+  }
+  getGroupLikesByPost(postId:number):Observable<GroupLike[]>
+  {
+    return this.http.get<GroupLike[]>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupLikes/" + postId
+    );
+  }
   /**************************************************************************/
   // Utility
   errorHandle(error: { error: { message: string; }; status: any; message: any; }) {
@@ -101,5 +207,5 @@ export class GroupService
     }
     console.log(errorMessage);
     return throwError(errorMessage);
-  }
+  } // blarg
 }

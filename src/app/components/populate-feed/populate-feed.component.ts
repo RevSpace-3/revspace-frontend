@@ -40,8 +40,11 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     this.posts = [];
     this.comments = [];
     this.postUtil = [];
+
     this.nextTen(0);
-    //this.posts = this.newPostService.posts;
+  
+    this.likeHttpService.getAllLikes().subscribe(data => {
+      this.allLikes = data; });
   }
 
   pclArray: Array<Array<Post>> = [];
@@ -50,10 +53,11 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
   postUtil: Array<PostUtilObj> = this.newPostService.postUtil;
   lastLoadTime: number = 0;
   like: Like;
-  allLikes: Array<Like> = [];
+  allLikes: Like[] = [];
   stringmessage:string;
   notificationModel:NotificationsModel;
   user: User = this.loginService.getLoginInfo().user;
+  errMsg:string;
 
   /*
   postUtil is an array where each element is an object with the following attributes:
@@ -69,14 +73,16 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
         (response) => {
   
   
-          if(response.status == 200){ //Okay
+          if(response.status == 200)
+          { //Okay
             
             this.pclArray = response.body;
             console.log(this.pclArray);
             this.populateArrays(this.pclArray);
   
   
-          }else if (response.status == 204){ //No more posts to display
+          }else if (response.status == 204)
+          { //No more posts to display
             
             alert("There are no more posts to display.")
   
@@ -89,10 +95,8 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     });
   }
 
-  populateArrays(pclArray: Array<Array<Post>>) {
-
-    
-
+  populateArrays(pclArray: Array<Array<Post>>)
+   {
     for (let newPost of pclArray[0]) {
 
       let newPostUtilObj = new PostUtilObj(newPost.postId, 0, "");
@@ -104,8 +108,6 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
         
         this.posts.push(newPost);
       }
-
-
       //console.log(newPost.creatorId.firstName);
     }
 
@@ -120,23 +122,24 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     }  
 
     this.calculateLikes(pclArray[2]);
-
   }
 
-  calculateLikes(likesArray: Array<Post>) {
-  
-
+  calculateLikes(likesArray: Array<Post>) 
+  {
     for(let likePost of likesArray){
 
       this.getPostUtilObj(likePost).numLikes = likePost.date;
       
       // for(let like of this.allLikes){
         //like.postId.postId == likePost.postId && this.user.userId == like.userId.userId
-        if( this.alreadyLiked(likePost) ){
+        if( this.alreadyLiked(likePost) ) // if the post is already liked
+        {
+
           this.getPostUtilObj(likePost).starStyle = "fas fa-star";
+
         }
-      // }
-      if (likePost.creatorId.userId == this.user.userId) {
+      if (likePost.creatorId.userId == this.user.userId) 
+      {
         
         // this.getPostUtilObj(likePost).starStyle = "fas fa-star";
         
@@ -146,30 +149,60 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
   }
 
   likePost(curPost: Post) {
-    if (!this.alreadyLiked(curPost)){
+    if (!this.alreadyLiked(curPost) )
+    {
       // this.likeHttpService.likePost();
 
-    this.getPostUtilObj(curPost).numLikes ++;
-    this.getPostUtilObj(curPost).starStyle = "fas fa-star";
-    this.like = new Like(this.loginService.getLoginInfo().user, curPost);
-    this.stringmessage = this.user.firstName + " " + this.user.lastName + " has liked " + curPost.body;
-    this.notificationModel = new NotificationsModel(this.stringmessage, curPost.creatorId.userId);
+      // added for liking logic.
+
+      this.getPostUtilObj(curPost).numLikes++;
+      this.getPostUtilObj(curPost).starStyle = "fas fa-star";
+
+      this.like = new Like(this.loginService.getLoginInfo().user, curPost);
+      this.stringmessage = this.user.firstName + " " + this.user.lastName + " has liked " + curPost.body;
+
+      this.notificationModel = new NotificationsModel(this.stringmessage, curPost.creatorId.userId);
       console.log(this.notificationModel)
-    this.notificationService.addNotifications(this.notificationModel).subscribe(
-      response =>{
-        console.log("worked")
-      },
-      error =>{
-        console.log("failed")
-      }
-    );
+
+      this.notificationService.addNotifications(this.notificationModel).subscribe(
+        response  =>{ console.log("worked") }, 
+        error     =>{ console.log("failed") }
+      );
     console.log(this.like);
     // console.log(this.pclArray);
     this.likeHttpService.likePost(this.like).subscribe(
-      (response)=>{console.log(response)
-        this.like = null;
+      (response)=>{
+        this.allLikes.push(response);
+        console.log(response);
+        this.like = null; })
+    }
+    else
+    {
+        // I'm sorry... I know this is gross...
+        // Whats going on here is that I'm iterating through the allLikes array to find the like that has been choosen
+        for(let i = 0; i < this.allLikes.length; i++) 
+        {
+          if(this.allLikes[i].postId.postId == curPost.postId && this.loginService.getLoginInfo().user.userId == this.allLikes[i].userId.userId)
+          {
+            console.log("I'm inside the inner loop");
+            console.log("Post Id: " + this.allLikes[i].postId.postId);
+            let result:boolean; // returns undefined, should prob use a string as a response message.
+
+            //Bind our results and remove the like from the db.
+            this.likeHttpService.deleteLike(this.allLikes[i]).subscribe( 
+              (data) => {result = data;},
+              err => this.errMsg = err
+            );
+              
+              this.getPostUtilObj(curPost).starStyle = "far fa-star";
+              let temp = this.getPostUtilObj(curPost).numLikes;
+
+              this.getPostUtilObj(curPost).numLikes = temp - 1 >= 0 ? temp - 1 : 0; // yeah... ik. but until I fix the other problem this is A solution lol.  
+          }
+          this.likeHttpService.getAllLikes().subscribe(data => { this.allLikes = data; }, err => this.errMsg = err); // Its also in onInit because for some reason it wasn't updating sometimes.
+          this.router.navigate(['populate-feed']);
+          //this.ngOnInit();
       }
-    )
       
     }
   }
@@ -181,16 +214,19 @@ export class PopulateFeedComponent implements OnInit, OnChanges {
     return this.getPostUtilObj(curPost).starStyle;
   }
 
-  alreadyLiked(curPost: Post): boolean {
-
-    for(let like of this.allLikes){
-      if(like.postId.postId == curPost.postId && this.user.userId == like.userId.userId){
+  alreadyLiked(curPost: Post): boolean 
+  {
+    for(let like of this.allLikes)
+    {
+      if(like.postId.postId == curPost.postId && this.user.userId == like.userId.userId)
+      {
+        //this.preventLike = true;
         return true;
       }
     }
-    //return false;
+    return false;
 
-    return (this.determineStarStyle(curPost) == "fas fa-star");
+    //return (this.determineStarStyle(curPost) == "fas fa-star");
 
   }
 
