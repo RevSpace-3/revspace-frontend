@@ -8,39 +8,32 @@ import { BackendService } from './backend.service';
   providedIn: 'root'
 })
 export class TwoFAService {
-  phoneTo:'+18186605542';
-  phoneNo:number;
-
-  
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':'application/json'
     })
   }
   
-
   constructor(
     private backendService:BackendService,
     public httpClient:HttpClient,
     private router:Router) { }
 
-  private invalidTwoFA = false;
-  
 
-  public mobileSend(phone:string, username:string, password:string)
+  // set to true after OTP matched
+  private validTwoFA = false;
+
+  // set to true if user gave wrong OTP
+  private invalidTwoFA = false;
+
+  public mobileSend(phone:string)
   {
     let sendCode = {phoneNo:phone}
-    const authToken:string = 'Basic ' + btoa(username + ":" + password);
-    const myHeaders:HttpHeaders = new HttpHeaders({
-      'Authorization': authToken
-    });
     const request = this.httpClient.post(this.backendService.getBackendURL() + "/mobileNo", sendCode);
     const result = request.subscribe(
       (response)=>{
         console.log(sendCode);
         alert(response);
-        
       },
       ()=>
       {
@@ -49,30 +42,42 @@ export class TwoFAService {
     )
   }
   
-
-  public twoFAValid()
-  {
-    return this.invalidTwoFA;
+  public getValidTwoFA() {
+    return this.validTwoFA;
   }
 
-  public otpSend(otp:number,username:string, password:string)
+  public setValidTwoFA(value : boolean) {
+    this.validTwoFA = value;
+  }
+
+  public otpSend(otp:number)
   {
-    let sms = {otp:otp}
-    const authToken:string = 'Basic ' + btoa(username + ":" + password);
-    const myHeaders:HttpHeaders = new HttpHeaders({
-      'Authorization': authToken
-    });
-    const request = this.httpClient.post(this.backendService.getBackendURL() + "/otp", sms);
+    let sms = {'otp' : otp}
+    const request = this.httpClient.post(this.backendService.getBackendURL() + "/otp", sms, {responseType : 'text'});
     const result = request.subscribe(
-      (response)=>{
-        console.log(sms);
-        alert(response);
-        
+      (response : string)=>{
+        console.log('otp passed: ' + response);
+        if (response === 'OTP Correct') {
+          this.validTwoFA = true;
+          this.router.navigate(['postfeed']);
+          this.invalidTwoFA = false;
+        }
+        else {
+           this.validTwoFA = false;
+           console.log('otp not correct');
+           this.invalidTwoFA = true;
+        }
       },
       ()=>
       {
+        console.log('otp failed');
         this.router.navigate(['']);
       }
     )
   }
-}
+
+  public isTwoFAInvalid() {
+    return this.invalidTwoFA;
+  }
+  
+}   

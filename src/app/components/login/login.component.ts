@@ -22,9 +22,6 @@ export class LoginComponent implements OnInit {
   username:string;
   password:string;
 
-  phone:string ='+18186605542';
-  otp:number;
-
   login()
   {
     this.loginService.login(this.username, this.password);
@@ -33,24 +30,10 @@ export class LoginComponent implements OnInit {
   /**
    * @returns whether the most recent login attempt was invalid (false if no login attempt this session)
    */
+   
   isLoginInvalid():boolean
   {
     return this.loginService.isLoginInvalid();
-  }
-
-  mobileSend()
-  {
-    this.twoFAService.mobileSend(this.phone, this.username, this.password);
-  }
-
-  twoFAValid()
-  {
-    return this.twoFAService.twoFAValid();
-  }
-
-  otpSend()
-  {
-    this.twoFAService.otpSend(this.otp, this.username, this.password);
   }
 
 }

@@ -10,8 +10,6 @@ import { interval, Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TwoFAService } from './services/two-fa.service';
 
-
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -28,9 +26,20 @@ export class AppComponent implements OnInit {
     })).subscribe()
   }
 
-  isLoggedIn() {
-    return (this.loginService.getLoginInfo() != null);
+  needLogin() {
+    return this.loginService.getLoginInfo() == null;
   }
+
+  need2FA() {
+    return this.loginService.getLoginInfo() != null
+           && !this.twoFAService.getValidTwoFA();
+  }
+
+  isLoggedIn() {
+    return this.loginService.getLoginInfo() != null
+           && this.twoFAService.getValidTwoFA();
+  }
+
   getUserName(): string {
     let user = this.loginService.getLoginInfo().user;
     return user.firstName + " " + user.lastName;

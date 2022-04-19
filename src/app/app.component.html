@@ -51,7 +51,14 @@
     </div>
   </div>
 </nav>
-<app-login *ngIf="!isLoggedIn()"></app-login>
+
+<!-- appears when no one is loged in -->
+<app-login *ngIf="needLogin()"></app-login>
+
+<!-- appears when user logged in but not authentaced -->
+<app-otp *ngIf="need2FA()"></app-otp>
+
+<!-- appears when user logged in and authentaced -->
 <router-outlet *ngIf="isLoggedIn()"></router-outlet>
 
 <app-top style="position: sticky; left: 90%; top: 90%;"></app-top>
