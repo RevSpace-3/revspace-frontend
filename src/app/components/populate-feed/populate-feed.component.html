@@ -15,7 +15,12 @@
                             <!-- </div> -->
                         </div>
                     </div>
+
                     <div class="p-2 px-3" ><p class="awesome">{{post.body}}</p></div>
+
+                    <div class="p-2 px-3"><p>{{post.body}}</p></div>
+
+
                     <!-- <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="https://i.imgur.com/aoKusnD.jpg"></div> -->
                     <div *ngIf="post.image"><img class="img-fluid img-responsive" [src]="post.image"></div>
                     <div class="d-flex justify-content-center socials p-2 py-3">
@@ -38,7 +43,12 @@
                                 <button class="btn btn-outline-secondary" [id]="'submitBtn' + post.postId" (click)="submitComment(post)">Submit</button>
                             </div>
                         </div>
+
                         <div class="comments" [id]="'attach' + post.postId"> <!--Id including current postId-->
+
+
+                        <div style="border: 2px solid;" class="comments" [id]="'attach' + post.postId"> <!--Id including current postId-->
+
                         </div>
                     </div>
                 </div>
@@ -48,27 +58,33 @@
 </div>
 
 
-<div *ngFor="let comment of comments; let j = index;" >
+<div *ngFor="let comment of comments; let j = index;">
 
     <div 
     style="position: relative;"
     [style.left.px]="getIndent(comment)" 
     [id]="'comment' + comment.postId"> 
         <!-- <img src="https://i.imgur.com/1YrCKa1.jpg" width="40" class="rounded-image"> -->
-        <div class="d-flex flex-column ml-2"> <span class="name" (click)="navToProfile(comment)" style="cursor: pointer; color:#2f3542">{{comment.creatorId.firstName}} {{comment.creatorId.lastName}}</span> 
-            <small class="comment-text" style="color:#2f3542">{{comment.body}}</small>
+        <div class="d-flex flex-column ml-2"> <span class="name" (click)="navToProfile(comment)" style="cursor: pointer;">{{comment.creatorId.firstName}} {{comment.creatorId.lastName}}</span> 
+            <small class="comment-text">{{comment.body}}</small>
             <div class="d-flex flex-row align-items-center status"></div>
+            
             <div style="color: rgb(185, 185, 186);">
                 <span class="commentButton" (click)="likePost(comment)" [attr.disable]="alreadyLiked(comment)">
                     <span style="text-align: left; vertical-align: text-top; color: rgb(185, 185, 186);">{{getPostUtilObj(comment).numLikes}}</span>
                     <i [class]="determineStarStyle(comment)"></i>
                     <span style="color: rgb(185, 185, 186);">  Like</span>
                 </span>
+    
+                
+
                 <span style="margin-left: 30px;" class="commentButton" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + 'writeCommentCollapse' + comment.postId" >
                     <i class="fa fa-comments-o"></i>
                     <span style="color: rgb(185, 185, 186);">   Comment</span>
                 </span>
             </div>
+            
+
             <div class="collapse" [id]="'writeCommentCollapse' + comment.postId">
                 <div class="input-group sb-2">
                     <div class="input-group-prepend">
@@ -80,8 +96,13 @@
                     </div>
                 </div>
             </div>
+
+
             <div [id]="'attach' + comment.postId"></div>
+
         </div>
     </div>
+
     <div *ngIf="j + 1 == comments.length && appendComments()"></div>
+
 </div>
