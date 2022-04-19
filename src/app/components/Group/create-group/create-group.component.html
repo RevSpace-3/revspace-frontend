@@ -2,7 +2,7 @@
 <html>
 
 <app-hub-navbar></app-hub-navbar>
-
+<div class="m-3 justify-content-md-center d-flex container-md">
 <form class="createGroupForm" [formGroup]="groupForm" (ngSubmit)="bindModel()" >
     <fieldset>
         <div class="form-control">
@@ -10,20 +10,23 @@
             <input type="text" class="form-control" formControlName="groupName">
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-6 mt-2">
                 <div class="form-control">
                     <label>Group Description</label>
                     <input type="text" class="form-control" formControlName="description">
                 </div>
             </div>
-            <div class="col-3">
+            
+            <div class="col-6 mt-2">
                 <div class="form-control">
                     <label>Group Interests</label>
-                    <input type="text" class="form-control" formControlName="interests">
-                    <input type="button" class="btn btn-danger" value="Add" (click)="addInterest()">
+                        <div class="input-group">
+                            <input type="text" class="form-control" formControlName="interests">
+                            <input type="button" class="btn" value="Add" (click)="addInterest()" style="background-color: #FCB414;">
+                        </div>
                 </div>
-            </div>
-            <div class="col-3">
+            </div> 
+            <div class="col-3 mt-2">
                 <div *ngFor="let str of interestArray">
                     <div class="list-group">
                         <div class="list-group-item list-group-item-action" (click)="removeInterestOnClick(str)">
@@ -33,12 +36,12 @@
                 </div>
             </div>
         </div>
-        <div class="doesStuff">
-            <input type="submit" class="btn btn-success createGroupSubmit">
+        <div class="doesStuff mt-2">
+            <input type="submit" class="btn createGroupSubmit" style="background-color: #F26925;">
         </div>
     </fieldset>
 </form>
-
+</div>
 
 <br><br><br>
 <hr color="black">
