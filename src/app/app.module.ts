@@ -21,14 +21,6 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchDetailsComponent } from './components/search-details/search-details.component';
 import { ViewProfileComponent } from './components/view-profile/view-profile.component';
-import { ViewGroupsComponent } from './components/Group/view-groups/view-groups.component';
-import { CreateGroupComponent } from './components/Group/create-group/create-group.component';
-import { JoinGroupComponent } from './components/Group/join-group/join-group.component';
-import { GroupPageComponent } from './components/Group/group-page/group-page.component';
-import { GroupFeedComponent } from './components/Group/group-feed/group-feed.component';
-import { CreateGroupPostComponent } from './components/Group/create-group-post/create-group-post.component';
-import { HubNavbarComponent } from './components/Group/hub-navbar/hub-navbar.component';
-
 
 
 
@@ -48,14 +40,7 @@ import { HubNavbarComponent } from './components/Group/hub-navbar/hub-navbar.com
     LeavingEditAlertComponent,
     SearchBarComponent,
     ChangePasswordComponent,
-    SearchDetailsComponent,
-    ViewGroupsComponent,
-    CreateGroupComponent,
-    JoinGroupComponent,
-    GroupPageComponent,
-    GroupFeedComponent,
-    CreateGroupPostComponent,
-    HubNavbarComponent
+    SearchDetailsComponent
   ],
   
   imports: [
