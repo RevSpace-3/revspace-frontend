@@ -84,7 +84,7 @@ export class CreateGroupPostComponent implements OnInit {
     this.groupService.addGroupPost(this.post).subscribe(
       (data)  => { this.post = data; }, 
       (error) => { console.log(error) },
-      () => { this.addNewPost(this.post); }); 
+      ()      => { this.addNewPost(this.post); }); 
 
  
      this.body="";

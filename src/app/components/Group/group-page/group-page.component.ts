@@ -1,5 +1,6 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GroupInfo } from 'src/app/models/group-info';
 import { GroupThread } from 'src/app/models/group-thread';
 import { User } from 'src/app/models/User';
@@ -21,23 +22,36 @@ export class GroupPageComponent implements OnInit
   ownerFlag:boolean = false;
   currentUser:User = null;
 
-  constructor(public loginService:LoginService, public groupService:GroupService, public router:Router) { }
+  routePath:string = "/view-groups";
+
+  constructor(public loginService:LoginService, public groupService:GroupService, public router:Router, private activeRoute:ActivatedRoute) { }
 
   ngOnInit(): void 
   {
     this.loadInformation();
+
+    this.activeRoute.queryParams.subscribe(queryParams => {
+      this.loadInformation();
+    });
+    this.activeRoute.params.subscribe(routeParams => {
+      this.loadInformation();
+    });
   }
 
   loadInformation()
   {
     this.group = this.groupService.getCurrentGroup();
     this.groupService.getThreadsByGroupInfo().subscribe(
-      (data)=>{ this.threads = data;}, 
-      err => this.errMsg = err,
-      () => { this.checkIfJoinable(); this.checkOwnership(); this.currentUser = this.loginService.getLoginInfo().user; } );
+      (data)  => { this.threads = data;}, 
+      (err)   => { this.errMsg = err; },
+      ()      => { 
+                  this.checkIfJoinable(); 
+                  this.currentUser = this.loginService.getLoginInfo().user; // Just so I dont have to call the service every time.
+                  this.checkOwnership(); 
+                } );
 
-    console.log("Group: " + this.group);
-    this.threads.forEach((data)=>{console.log("Thread# " + data.groupId)});
+    //console.log("Group: " + this.group);
+    //this.threads.forEach((data)=>{console.log("Thread# " + data.groupId)});
   }
   checkIfJoinable()
   {
@@ -54,7 +68,7 @@ export class GroupPageComponent implements OnInit
   }
   checkOwnership()
   {
-    if(this.loginService.getLoginInfo().user.userId == this.group.owner.userId)
+    if(this.currentUser.userId == this.group.owner.userId)
       this.ownerFlag = true;
   }
   joinGroup()
@@ -71,7 +85,7 @@ export class GroupPageComponent implements OnInit
                   }
     );
     this.joinFlag = false; 
-    this.router.navigate(['group-hub']);
+    this.router.navigate(['/group-page']);
     
   }
   getCurUserThread() : GroupThread
@@ -96,7 +110,7 @@ export class GroupPageComponent implements OnInit
                 }
     );
     this.joinFlag = true; 
-    this.router.navigate(['group-hub']);
+    this.router.navigate([this.routePath]);
   }
 
   deleteGroup()
@@ -106,7 +120,7 @@ export class GroupPageComponent implements OnInit
       (err)   =>  { console.log(err); },
       ()      =>  {  }
     );
-    this.router.navigate(['group-hub']);
+    this.router.navigate([this.routePath]);
   }
   navToProfile(user:User)
   {

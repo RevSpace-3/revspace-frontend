@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-hub-navbar',
@@ -9,7 +10,14 @@ export class HubNavbarComponent implements OnInit {
 
   constructor() { }
 
+  @Output() searchQuery:EventEmitter<string> = new EventEmitter();
+  searchPara:string;
+
   ngOnInit(): void {
   }
 
+  searchByInterest()
+  {
+    this.searchQuery.emit(this.searchPara);
+  }
 }

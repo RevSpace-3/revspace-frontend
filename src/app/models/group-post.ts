@@ -1,3 +1,4 @@
+import { GroupLike } from "./group-like";
 import { Like } from "./Like";
 import { User } from "./User";
 
@@ -14,11 +15,10 @@ export class GroupPost
 
     owner:User;
     parent:GroupPost;
-    child:GroupPost;
 
-    likes:Array<Like>;
+    likes:Array<GroupLike>;
 
-    constructor(body:string, image:string, date:string, comment:boolean, user:User, parent:GroupPost, child:GroupPost, likes:Array<Like>)
+    constructor(body:string, image:string, date:string, comment:boolean, user:User, parent:GroupPost, child:GroupPost, likes:Array<GroupLike>)
     {
         this.body = body;
         this.image = image;
@@ -27,7 +27,6 @@ export class GroupPost
         this.comment = comment;
         this.owner = user;
         this.parent = parent;
-        this.child = child;
         this.likes = likes;
     }
 }

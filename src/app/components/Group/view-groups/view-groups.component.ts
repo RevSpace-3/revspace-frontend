@@ -4,7 +4,7 @@ import { GroupService } from 'src/app/services/group.service';
 
 import { GroupThread } from 'src/app/models/group-thread';
 import { GroupInfo } from 'src/app/models/group-info';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-groups',
@@ -16,9 +16,10 @@ export class ViewGroupsComponent implements OnInit
   title: string;
 
   groups:GroupInfo[];
+  query:string;
   errMsg:string;
 
-  constructor(public groupService:GroupService, public loginService:LoginService, public router:Router) { }
+  constructor(public groupService:GroupService, public loginService:LoginService, public router:Router, private activeRoute:ActivatedRoute) { }
 
   ngOnInit(): void
   {
@@ -26,7 +27,20 @@ export class ViewGroupsComponent implements OnInit
     this.groupService.getGroupsByMembership().subscribe(
       (data)  =>  { this.groups = data;}, 
       (err)   =>  { this.errMsg = err; });
+
+    	this.activeRoute.queryParams.subscribe(queryParams => {
+        // do something with the query params
+      });
+      this.activeRoute.params.subscribe(routeParams => {
+        this.groupService.getGroupsByMembership().subscribe(
+          (data)  =>  { this.groups = data;}, 
+          (err)   =>  { this.errMsg = err; });
+      });
   }
+
+  
+
+
 
   openGroup(index:number)
   {
@@ -34,6 +48,14 @@ export class ViewGroupsComponent implements OnInit
     this.router.navigate(['group-page']);
   }
 
+  searchByInterest(search:string)
+  {
+    this.groupService.getGroupsByInterest(search).subscribe(
+      (data) => { this.groups = data; },
+      (err)  => { console.log(err); },
+      ()     => {  }
+    );
+  }
 }
 
 

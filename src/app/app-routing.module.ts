@@ -15,7 +15,6 @@ import { JoinGroupComponent } from './components/Group/join-group/join-group.com
 import { GroupPageComponent } from './components/Group/group-page/group-page.component';
 import { PopulateFeedComponent } from './components/populate-feed/populate-feed.component';
 import { GroupFeedComponent } from './components/Group/group-feed/group-feed.component'; 
-import { GroupHubComponent } from './components/Group/group-hub/group-hub.component';
 
 const routes: Routes = [
   {path: '', component:PostFeedComponent},
@@ -28,7 +27,6 @@ const routes: Routes = [
   {path: 'create-group', component: CreateGroupComponent},
   {path: 'join-groups', component: JoinGroupComponent},
   {path: 'group-page', component: GroupPageComponent},
-  {path: 'group-hub', component: GroupHubComponent},
   {path: 'populate-feed', component: PopulateFeedComponent},
   {path: 'group-feed', component: GroupFeedComponent}
 ];

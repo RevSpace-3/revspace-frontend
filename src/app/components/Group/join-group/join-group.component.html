@@ -3,12 +3,7 @@
     <app-hub-navbar></app-hub-navbar>
 <body>
     <div class="container-fluid">
-        <div *ngIf="showGroup">
-            <app-view-group-thread (eventEmitter)="closeGroup()"></app-view-group-thread>
-        </div>
-
             <h1 >{{statusMsg}}</h1>
-            <h1>{{errMsg}}</h1>
             <form class="viewGroupsForm" >
                 <ol> 
                     <div class="list-group" *ngFor="let group of groups; let i = index;">

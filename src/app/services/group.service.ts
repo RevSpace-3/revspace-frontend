@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { GroupInfo } from '../models/group-info';
+import { GroupLike } from '../models/group-like';
 import { GroupPost } from '../models/group-post';
 import { GroupThread } from '../models/group-thread';
 import { BackendService } from './backend.service';
@@ -75,7 +76,17 @@ export class GroupService
           {headers: this.postHeaders}
       ).pipe(retry(0), catchError(this.errorHandle));
   }
+  addGroupLike(like:GroupLike): Observable<GroupLike>
+  {
+    const jsonStr:string = JSON.stringify(like);
+    console.log(jsonStr);
 
+    return this.http.post<GroupLike>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupLikes",
+      like,
+      {headers: this.postHeaders}
+  ).pipe(retry(0), catchError(this.errorHandle));
+  }
   /**************************************************************************/
   // Puts
   updateGroup(groupObj:GroupThread): Observable<GroupThread>
@@ -102,6 +113,12 @@ export class GroupService
   {
     return this.http.delete<String>(
       this.backendService.getBackendURL() + uriMapping + "/Delete/" + groupInfoId );
+  }
+  deleteGroupLike(like:GroupLike): Observable<String>
+  {
+    let id:number = like.likeId;
+    return this.http.delete<String>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupLikes/" + id );
   }
 
   /**************************************************************************/
@@ -155,6 +172,26 @@ export class GroupService
   {
     return this.http.get<Array<GroupPost[]>>(
       this.backendService.getBackendURL() + uriMapping + "/GroupPosts/" + headId
+    );
+  }
+
+  getGroupsByInterest(interest:string):Observable<GroupInfo[]>
+  {
+    return this.http.get<GroupInfo[]>(
+      this.backendService.getBackendURL() + uriMapping + "/" + interest.toLocaleLowerCase()
+    );
+  }
+
+  getGroupLikesByGroup(groupHeadId:number):Observable<GroupLike[]>
+  {
+    return this.http.get<GroupLike[]>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupLikes/Group" + groupHeadId
+    );
+  }
+  getGroupLikesByPost(postId:number):Observable<GroupLike[]>
+  {
+    return this.http.get<GroupLike[]>(
+      this.backendService.getBackendURL() + uriMapping + "/GroupLikes/" + postId
     );
   }
   /**************************************************************************/

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 
-<app-hub-navbar></app-hub-navbar>
+<app-hub-navbar (searchQuery)="searchByInterest($event)"></app-hub-navbar>
+
 <body>
     <div class="container-fluid">
         <h1>{{errMsg}}</h1>

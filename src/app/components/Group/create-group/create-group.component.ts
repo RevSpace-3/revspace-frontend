@@ -106,7 +106,7 @@ export class CreateGroupComponent implements OnInit {
 
   onClick()
   {
-    this.router.navigateByUrl("/group-hub"); 
+    this.router.navigateByUrl("/view-groups"); 
   }
 
   removeInterestOnClick(ele:string)
