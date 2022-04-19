@@ -43,7 +43,7 @@
                             <input class="btn btn-primary" type="button" value="Join Group" (click)="joinGroup()">
                         </div>
                         <div *ngIf="!joinFlag && !ownerFlag">
-                            <input class="btn btn-danger" type="button" value="Leave Group" (click)="leaveGroup()">
+                            <input class="btn btn-danger mt-2" type="button" value="Leave Group" (click)="leaveGroup()">
                         </div>
                         <label><strong>Members</strong></label>
                         <div *ngFor="let thread of threads; let i = index;" (click)="navToProfile(thread.member)">

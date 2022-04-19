@@ -47,7 +47,7 @@
                             </div>
                         </div>
 
-                        <div style="border: 2px solid;" class="comments" [id]="'attach' + post.postId"> <!--Id including current postId-->
+                        <div  class="comments" [id]="'attach' + post.postId"> <!--Id including current postId-->
                         </div>
                     </div>
                     
@@ -69,7 +69,7 @@
     [id]="'comment' + comment.postId"> 
         <!-- <img src="https://i.imgur.com/1YrCKa1.jpg" width="40" class="rounded-image"> -->
         <div class="d-flex flex-column ml-2"> <span class="name" (click)="navToProfile(comment)" style="cursor: pointer;">{{comment.owner.firstName}} {{comment.owner.lastName}}</span> 
-            <small class="comment-text">{{comment.body}}</small>
+            <small class="comment-text border border-secondary rounded" style="width: 200px; background-color: #EAEAEA;">{{comment.body}}</small>
             <div class="d-flex flex-row align-items-center status"></div>
             
                 

@@ -3,7 +3,7 @@
         <div class="chat-content">
             <div class="card">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" *ngFor=" let groupChat of webSocketService.groupChat">
+                    <li class="list-group-item border border-secondary" *ngFor=" let groupChat of webSocketService.groupChat">
                        <strong>{{groupChat.user}}</strong> 
                        <span>{{groupChat.message}}</span>
                     </li>
