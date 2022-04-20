@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,6 +9,7 @@ import { Post } from 'src/app/models/Post';
 import { User } from 'src/app/models/User';
 import { GroupService } from 'src/app/services/group.service';
 import { LoginService } from 'src/app/services/login.service';
+
 
 @Component({
   selector: 'app-create-group',
@@ -24,6 +25,8 @@ export class CreateGroupComponent implements OnInit {
 
   interestArray:string[] = [];
 
+  @Output() closeFlag = new EventEmitter<boolean>();
+
 
   // may need a router dependency
   constructor( public router:Router, public formBuilder:FormBuilder, public groupService:GroupService, public loginService:LoginService) { }
@@ -34,7 +37,7 @@ export class CreateGroupComponent implements OnInit {
     this.groupForm = this.formBuilder.group(
     {
       groupName: ['', Validators.required, Validators.minLength(3)],
-      description: ['', Validators.required, Validators.minLength(3)],
+      description: ['', Validators.required, Validators.minLength(12)],
       interests: ['', Validators.required, Validators.minLength(3)]
     });
   }
@@ -79,8 +82,9 @@ export class CreateGroupComponent implements OnInit {
     this.groupService.addGroup(thread).subscribe(
                (data) => tempThread = data, 
                err => this.errorMsg = err,
-               () => { this.onClick(); });
-      this.onClick();
+               () => { this.closeFlag.emit(true); });
+      //this.onClick();
+      this.closeFlag.emit(true);
   }
   printGroup(group:GroupThread)
   {
@@ -100,8 +104,12 @@ export class CreateGroupComponent implements OnInit {
   addInterest()
   {
     let val:string = this.groupForm.get('interests').value;
-    console.log(val);
-    this.interestArray.push(val);
+
+    if(val.length >= 3)
+    {
+      console.log(val);
+      this.interestArray.push(val);
+    }
   }
 
   onClick()

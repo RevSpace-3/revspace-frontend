@@ -179,7 +179,11 @@ export class GroupFeedComponent implements OnInit {
 
   }
 
-
+  formatDateString(date:string):string
+  {
+    let temp:Date = new Date(date);
+    return temp.getDate() + " " + temp.getHours() + " " + temp.getMinutes();
+  }
 
   appendComments() : boolean
   {

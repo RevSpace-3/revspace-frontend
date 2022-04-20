@@ -62,4 +62,13 @@ export class JoinGroupComponent implements OnInit {
        err => this.errMsg = err, 
        () => this.statusMsg = this.groups != undefined ? "" : "Sorry, there are no groups to join :c");
   }
+
+  searchByInterest(search:string)
+  {
+    this.groupService.getGroupsByInterest(search).subscribe(
+      (data) => { this.groups = data; },
+      (err)  => { console.log(err); },
+      ()     => {  }
+    );
+  }
 }

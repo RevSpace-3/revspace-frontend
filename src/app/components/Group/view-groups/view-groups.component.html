@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html>
 
-<app-hub-navbar (searchQuery)="searchByInterest($event)"></app-hub-navbar>
+<!-- Lol this is so gross -->
+<app-hub-navbar 
+    (searchQuery)="searchByInterest($event)" 
+    (showCreate)="toggle($event)" 
+    (showGroups)="displayMyGroups($event)" 
+    (showJoinable)="displayJoinableGroups($event)">
+</app-hub-navbar>
 
 <body>
+    
     <div class="container-fluid">
-        <h1>{{errMsg}}</h1>
+        <div class="d-flex justify-content-center">
+            <h3>{{statusMsg}}</h3><br/>
+        <div class="btn-group" role="group" aria-label="Basic example" hidden>
+            <button type="button" class="btn btn-secondary">My Groups</button>
+            <button type="button" class="btn btn-secondary">Joinable</button>
+            <button data-toggle="collapse" data-target="createGroup" [attr.data-bs-target]="'#createGroup'" type="button" class="btn btn-secondary">Create</button>
+          </div>
+        
+          <div class="collapse" [id]="'createGroup'" [ngClass]="collapseString">
+            <app-create-group (closeFlag)="toggle($event)"></app-create-group>
+          </div>
+        </div>
         <form class="viewGroupsForm" >
             <ol> 
                 <div class="list-group" *ngFor="let group of groups; let i = index;">

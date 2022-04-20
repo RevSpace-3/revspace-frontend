@@ -6,7 +6,7 @@
 
 <div class="container mt-4 mb-5">
     <div class="d-flex justify-content-center row">
-        <div style="width: 55%;"  class="col-md-8">
+        <div style="width: 70%;"  class="col-md-8">
             <div class="feed p-2">
                 
                 <div *ngFor="let post of postList; let i = index" class="bg-white border mt-2 shadow bg-white rounded"> <!--this is a post-->
@@ -17,7 +17,7 @@
                     <div>
                         <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                             <!-- <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="https://i.imgur.com/aoKusnD.jpg" width="45"> -->
-                            <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold"><p (click)="navToProfile(post)" style="cursor: pointer;">{{post.owner.firstName}} {{post.owner.lastName}}</p></span><span class="text-black-50 time">{{ post.datePosted}} </span></div>
+                            <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold"><p (click)="navToProfile(post)" style="cursor: pointer;">{{post.owner.firstName}} {{post.owner.lastName}}</p></span><span class="text-black-50 time">{{ post.datePosted | date}} </span></div>
                             <!-- </div> -->
                         </div>
                     </div>

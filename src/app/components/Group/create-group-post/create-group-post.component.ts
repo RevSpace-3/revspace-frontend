@@ -16,7 +16,7 @@ export class CreateGroupPostComponent implements OnInit {
 
   @Output() event = new EventEmitter<GroupPost>();
 
-  body: string;
+  body: string = "";
   urlLink:string = "";
   creatorId:User;
   comment:boolean;
@@ -44,7 +44,7 @@ export class CreateGroupPostComponent implements OnInit {
 
   addNewPost(post:GroupPost)
   {
-    post.image = this.urlLink;
+    post.image = this.urlLink != null ? this.urlLink : "";
     this.event.emit(post);
   }
 
@@ -78,10 +78,13 @@ export class CreateGroupPostComponent implements OnInit {
   //ADDING POST
   createPost()
   {
-    this.post.body = this.body;
-    this.post.image = this.urlLink;
+    //this.post.body = this.body != null ? this.body : "";
+    //this.post.image = this.urlLink != null ? this.urlLink : "";
 
-    this.groupService.addGroupPost(this.post).subscribe(
+    let temp:GroupPost = new GroupPost(this.body, this.urlLink, new Date().toString(), false, this.loginService.getLoginInfo().user, this.groupService.getCurrentGroup().postHead, null, null);
+
+
+    this.groupService.addGroupPost(temp).subscribe(
       (data)  => { this.post = data; }, 
       (error) => { console.log(error) },
       ()      => { this.addNewPost(this.post); }); 

@@ -11,6 +11,11 @@ export class HubNavbarComponent implements OnInit {
   constructor() { }
 
   @Output() searchQuery:EventEmitter<string> = new EventEmitter();
+
+  @Output() showGroups:EventEmitter<boolean> = new EventEmitter();
+  @Output() showJoinable:EventEmitter<boolean> = new EventEmitter();
+  @Output() showCreate:EventEmitter<boolean> = new EventEmitter();
+
   searchPara:string;
 
   ngOnInit(): void {
@@ -19,5 +24,18 @@ export class HubNavbarComponent implements OnInit {
   searchByInterest()
   {
     this.searchQuery.emit(this.searchPara);
+  }
+
+  emitShowGroup()
+  {
+    this.showGroups.emit(true);
+  }
+  emitJoinGroup()
+  {
+    this.showJoinable.emit(true);
+  }
+  emitCreateGroup()
+  {
+    this.showCreate.emit(true);
   }
 }

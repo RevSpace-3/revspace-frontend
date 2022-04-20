@@ -1,4 +1,3 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupInfo } from 'src/app/models/group-info';
@@ -6,6 +5,7 @@ import { GroupThread } from 'src/app/models/group-thread';
 import { User } from 'src/app/models/User';
 import { GroupService } from 'src/app/services/group.service';
 import { LoginService } from 'src/app/services/login.service';
+
 
 @Component({
   selector: 'app-group-page',
@@ -38,6 +38,8 @@ export class GroupPageComponent implements OnInit
     });
   }
 
+
+
   loadInformation()
   {
     this.group = this.groupService.getCurrentGroup();
@@ -66,6 +68,11 @@ export class GroupPageComponent implements OnInit
       }
     }
   }
+  handleNavBarEvent(flag:boolean)
+  {
+    this.router.navigateByUrl("/view-groups");
+  }
+
   checkOwnership()
   {
     if(this.currentUser.userId == this.group.owner.userId)
@@ -126,4 +133,6 @@ export class GroupPageComponent implements OnInit
   {
     this.router.navigate(['viewprofile/' + user.userId]);
   }
+
+
 }

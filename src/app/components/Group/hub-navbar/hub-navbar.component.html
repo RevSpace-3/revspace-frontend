@@ -1,23 +1,18 @@
+
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <a class="navbar-brand">Group Hub | </a>
+    <a class="navbar-brand">&emsp;Group Hub | </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-2">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/view-groups">My Groups</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/join-groups">Join</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/create-group">Create</a>
-        </li>
-        <li class="nav-item searchField" >
-          <input type="text" placeholder="Enter Interest" [(ngModel)]="searchPara">
-          <input type="button" class="btn btn-dark" value="Search" (click)="searchByInterest()">
-        </li>
-      </ul>
+    <div class="d-flex justify-content-center">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary" (click)="emitShowGroup()">My Groups</button>
+        <button type="button" class="btn btn-secondary" (click)="emitJoinGroup()">Joinable</button>
+        <button data-toggle="collapse" data-target="createGroup" type="button" class="btn btn-secondary" (click)="emitCreateGroup()">Create</button>
+      </div>
+    </div>
+    <div class="searchField" style="float: right; padding: 10px">
+      <input type="text" placeholder="Enter Interest" [(ngModel)]="searchPara">
+      <input type="button" class="btn btn-dark" value="Search" (click)="searchByInterest()">
     </div>
   </nav>

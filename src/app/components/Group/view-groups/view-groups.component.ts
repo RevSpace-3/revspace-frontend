@@ -19,6 +19,12 @@ export class ViewGroupsComponent implements OnInit
   query:string;
   errMsg:string;
 
+  statusMsg:string;
+
+  collapseString:string = "collapse hide";
+  toggleFlag:boolean = false;
+
+
   constructor(public groupService:GroupService, public loginService:LoginService, public router:Router, private activeRoute:ActivatedRoute) { }
 
   ngOnInit(): void
@@ -38,9 +44,16 @@ export class ViewGroupsComponent implements OnInit
       });
   }
 
-  
+  toggle(flag:boolean)
+  {
+    this.toggleFlag = !this.toggleFlag;
+    this.statusMsg = "";
 
-
+    if(this.toggleFlag)    
+      this.collapseString = "collapse show";
+    else
+      this.collapseString = "collapse hide";
+  }
 
   openGroup(index:number)
   {
@@ -55,6 +68,34 @@ export class ViewGroupsComponent implements OnInit
       (err)  => { console.log(err); },
       ()     => {  }
     );
+  }
+
+
+  displayMyGroups(flag:boolean)
+  {
+    if(flag)
+    {
+      if(this.toggleFlag)
+        this.toggle(true);
+
+      this.groupService.getGroupsByMembership().subscribe(
+        (data)  =>  { this.groups = data;}, 
+        (err)   =>  { this.errMsg = err; },
+        ()      =>  { this.statusMsg = this.groups != undefined || this.groups.length > 0 ? "" : "Sorry, you currently don't belong to any groups :c" });
+    }
+  }
+  displayJoinableGroups(flag:boolean)
+  {
+    if(flag)
+    {
+      if(this.toggleFlag)
+        this.toggle(true);
+
+      this.groupService.getOtherGroups().subscribe(
+        (data)=>{ this.groups = data;},
+         err => this.errMsg = err, 
+         () => this.statusMsg = this.groups != undefined ? "" : "Sorry, there are no groups to join :c");
+    }
   }
 }
 

@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html>
 
-<app-hub-navbar></app-hub-navbar>
-<div class="m-3 justify-content-md-center d-flex container-md">
-<form class="createGroupForm" [formGroup]="groupForm" (ngSubmit)="bindModel()" >
+
+<div class="justify-content-center">
+    <div class="shadow w-100 bg-white rounded">
+<form class="createGroupForm" [formGroup]="groupForm" (ngSubmit)="bindModel()" style="padding: 12px;">
     <fieldset>
         <div class="form-control">
             <label>Group Name</label>
             <input type="text" class="form-control" formControlName="groupName">
         </div>
         <div class="row">
-            <div class="col-6 mt-2">
+            <div class="col-lg-8">
                 <div class="form-control">
                     <label>Group Description</label>
                     <input type="text" class="form-control" formControlName="description">
                 </div>
-            </div>
-            
-            <div class="col-6 mt-2">
+   
                 <div class="form-control">
                     <label>Group Interests</label>
                         <div class="input-group">
@@ -26,7 +25,7 @@
                         </div>
                 </div>
             </div> 
-            <div class="col-3 mt-2">
+            <div class="col-lg-4">
                 <div *ngFor="let str of interestArray">
                     <div class="list-group">
                         <div class="list-group-item list-group-item-action" (click)="removeInterestOnClick(str)">
@@ -35,19 +34,18 @@
                     </div>
                 </div>
             </div>
+            <div class="doesStuff" *ngIf="interestArray.length > 0">
+                <input type="submit" class="btn createGroupSubmit" style="background-color: #F26925;">
+            </div>
         </div>
-        <div class="doesStuff mt-2">
-            <input type="submit" class="btn createGroupSubmit" style="background-color: #F26925;">
-        </div>
+
     </fieldset>
 </form>
 </div>
-
-<br><br><br>
-<hr color="black">
-<br><br>
+</div>
 
 
+<br/><br/><br/><br/>
 
 <!--</body>-->
 </html>
